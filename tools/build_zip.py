@@ -12,10 +12,12 @@
 
 排除：.git / 构建脚本 / README 等仓库文件
 """
-import io, os, zipfile, sys
+import io, os, zipfile, sys, shutil
 
 REPO = r"C:\xiancheng\创作工作\03_魅族线程_Meizu_Thread"
 OUTDIR = r"C:\xiancheng\创作工作\04_魅族适配_产出物"
+# 归档目录（在仓库内，随 git 推送，方便直接取用）
+ARCHIVE_DIR = os.path.join(REPO, "out")
 VERSION = "1.0"
 ZIPNAME = f"Meizu_Thread_{VERSION}.zip"
 
@@ -79,3 +81,10 @@ with zipfile.ZipFile(zippath) as z:
     for n in sorted(z.namelist()):
         info = z.getinfo(n)
         print(f"  {info.file_size:>9,}  {n}")
+
+# ---- 同步到仓库 out/ 归档目录（随 git 推送）----
+os.makedirs(ARCHIVE_DIR, exist_ok=True)
+archived = os.path.join(ARCHIVE_DIR, ZIPNAME)
+shutil.copy2(zippath, archived)
+print(f"\n已归档到仓库: {archived}")
+print(f"  大小: {os.path.getsize(archived):,} 字节")
