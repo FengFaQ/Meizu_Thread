@@ -38,6 +38,7 @@
 
 | 文件 | 说明 |
 |---|---|
+| `out/Meizu_Thread_1.0.zip` | **已构建好的可刷入包**（归档，直接下载即用） |
 | `applist.conf` | 最终生效的线程规则（由 action.sh 生成） |
 | `meizu_rules.conf` | 魅族专属规则源文件 |
 | `asoulopt_rules.conf` | AsoulOpt 游戏规则源文件 |
@@ -47,6 +48,13 @@
 | `action.sh` | WebUI / 配置更新脚本 |
 | `customize.sh` | 安装脚本 |
 | `service.sh` | 开机启动脚本 |
+| `tools/` | 可复现的构建脚本 |
+
+## 发布包下载
+
+```
+https://raw.githubusercontent.com/FengFaQ/Meizu_Thread/main/out/Meizu_Thread_1.0.zip
+```
 
 ## 规则语法
 
