@@ -44,6 +44,8 @@ for l in io.open(RS, encoding="utf-8"):
         rs_meizu[s.split("=", 1)[0].strip()] = s.split("=", 1)[1].strip()
 
 MAP = {"0-1": "e-core", "2-5": "p-core", "4-5": "hp-core"}
+# 进程级兜底（裸 `包名=X`）不映射为 hp-core，改用 e-core,p-core —— 见 gen_meizu_rules.py 说明
+FALLBACK = "e-core,p-core"
 app_meizu = {}
 for i, l, r in rules:
     pkg = re.split(r"[={:]", l)[0].strip()
@@ -68,9 +70,11 @@ for k, v in missing[:20]:
 # 值映射校验
 wrong = []
 for k, v in rs_meizu.items():
-    exp = MAP.get(v, v)
     alt = k.replace("{flyme.launcher}", "{.flyme.launcher}")
     got = app_meizu.get(k, app_meizu.get(alt))
+    # 进程级兜底（无 {} 且无 :）期望 FALLBACK，其余按 MAP
+    is_fallback = ("{" not in k) and (":" not in k)
+    exp = FALLBACK if is_fallback else MAP.get(v, v)
     if got is not None and got != exp:
         wrong.append((k, v, exp, got))
 print(f"    映射错误:   {len(wrong)}")

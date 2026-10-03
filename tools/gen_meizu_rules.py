@@ -36,13 +36,24 @@ for raw in io.open(SRC, encoding="utf-8", errors="replace"):
     meizu_only.append(line)
 
 # ---- 2. 目标核心重映射 ----
+# 注意：进程级兜底（裸 `包名=X`）不映射为 hp-core。
+# 原因：RS 原文的 4-5 是 4+3+1 拓扑下的 2 个性能核；若映射为 hp-core，
+#       在魅族21(2+3+2+1) 上会展开为【单个超大核 7】，
+#       89 个魅族包的其余线程全部挤到一个核上，反而引发争抢。
+# 彗星官方 App_common 的进程级兜底实践是 e-core,p-core（85 处），
+# 故此处同样采用 e-core,p-core，保持与底座一致。
+FALLBACK = "e-core,p-core"
 MAP = {"0-1": "e-core", "2-5": "p-core", "4-5": "hp-core"}
+
 
 def remap(line):
     lhs, rhs = line.split("=", 1)
-    rhs = rhs.strip()
+    lhs, rhs = lhs.strip(), rhs.strip()
+    # 进程级兜底：选择器不含 {} 且不含 : 后缀
+    if "{" not in lhs and ":" not in lhs:
+        return lhs + "=" + FALLBACK
     if rhs in MAP:
-        return lhs.strip() + "=" + MAP[rhs]
+        return lhs + "=" + MAP[rhs]
     return line  # 未预期的目标，原样保留以便人工复核
 
 remapped = [remap(l) for l in meizu_only]
@@ -96,7 +107,11 @@ out.write("# 核心映射（原 RS 使用写死的 4+3+1 拓扑编号，此处�
 out.write("# 由引擎按魅族21 实测拓扑 2+3+2+1 在运行时展开）：\n")
 out.write("#     原 0-1  (小核/后台)   -> e-core\n")
 out.write("#     原 2-5  (中大核/渲染) -> p-core\n")
-out.write("#     原 4-5  (大核/兜底)   -> hp-core\n")
+out.write("#     原 4-5  (进程级兜底)  -> e-core,p-core\n")
+out.write("#       注：不映射为 hp-core。RS 的 4-5 是 4+3+1 下的 2 个性能核，\n")
+out.write("#       而魅族21 的 hp-core 只展开为单个超大核(核心7)，\n")
+out.write("#       89 个包的兜底线程挤到 1 个核会争抢；故与彗星底座一致用 e-core,p-core。\n")
+out.write("#     线程级规则 (包名{线程}=X) 保持原映射 e/p/hp-core。\n")
 out.write("#\n")
 out.write("# 规则含义：\n")
 out.write("#     包名{线程}=核心    指定线程绑核\n")
