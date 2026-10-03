@@ -1,5 +1,15 @@
 SKIPUNZIP=0
 
+# ============================================================
+# 魅族线程 (Meizu Thread) 安装脚本
+#
+# 设计：全自动安装，无任何交互询问。
+#   - 目标机型固定为魅族21(骁龙8Gen3)，无需选档
+#   - 魅族专属规则为本模块核心，默认启用
+#   - 游戏线程由 AsoulOpt 承担，默认启用（不再询问是否使用游戏线程）
+#   - 如需更改，安装后在 WebUI(confige.txt) 中调整
+# ============================================================
+
 check_magisk_version() {
     ui_print "- Magisk version: $MAGISK_VER_CODE"
     ui_print "- Module version: $(grep_prop version "$TMPDIR/module.prop")"
@@ -40,6 +50,8 @@ extract_bin() {
     "$MODPATH/AppOpt" -v || abort "! 主程序验证失败，请检查模块 zip 文件是否损坏"
 }
 
+# 探测底座档位（8G3 走 8G3 规则，其余走通用规则）
+# 不询问用户，纯自动判定
 detect_soc_profile() {
     SOC_MODEL=$(getprop ro.soc.model)
     SOC_PLATFORM=$(getprop ro.board.platform)
@@ -63,37 +75,15 @@ detect_soc_profile() {
     ui_print "- 彗星底座: $BASE_NAME"
 }
 
-# 音量键位选择：上=开 / 下=关
-ask_toggle() {
-    local prompt="$1"
-
-    ui_print "********************************************"
-    ui_print "- $prompt"
-    ui_print "  音量上 = 开启   音量下 = 关闭"
-    ui_print "********************************************"
-
-    while true; do
-        EVENT=$(getevent -lqt 2>&1 | head -1)
-        if echo "$EVENT" | grep -q "KEY_VOLUMEUP"; then
-            echo "on"; return
-        elif echo "$EVENT" | grep -q "KEY_VOLUMEDOWN"; then
-            echo "off"; return
-        fi
-        sleep 0.1
-    done
-}
-
-setup_config() {
-    MEIZU_VAL=$(ask_toggle "启用魅族专属规则？(com.meizu.* / com.flyme.*)")
-    ASOUL_VAL=$(ask_toggle "启用 AsoulOpt 游戏规则？(333 款游戏)")
-
+# 写入默认配置（全部默认启用，无交互）
+write_config() {
     TIME_AREA=$(getprop persist.sys.timezone)
     [ -n "$TIME_AREA" ] || TIME_AREA=UTC
     UTC_TIME=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
     cat > "$MODPATH/confige.txt" << configEOF
-meizu=$MEIZU_VAL
-asoul=$ASOUL_VAL
+meizu=on
+asoul=on
 8G3=$SOC_8G3
 soc_model=$SOC_MODEL
 soc_platform=$SOC_PLATFORM
@@ -101,28 +91,43 @@ time_area=$TIME_AREA
 time=$UTC_TIME
 configEOF
 
-    MZ_NAME=Off; [ "$MEIZU_VAL" = "on" ] && MZ_NAME=On
-    AS_NAME=Off; [ "$ASOUL_VAL" = "on" ] && AS_NAME=On
-
-    sed -i "/^description=/ s|^description=.*|description=魅族线程 $BASE_NAME 魅族:${MZ_NAME} Asoul:${AS_NAME}|" "$MODPATH/module.prop"
-    ui_print "- 彗星底座: $BASE_NAME / 魅族: $MZ_NAME / AsoulOpt: $AS_NAME"
+    sed -i "/^description=/ s|^description=.*|description=魅族线程 $BASE_NAME 魅族:On Asoul:On|" "$MODPATH/module.prop"
+    ui_print "- 彗星底座: $BASE_NAME"
+    ui_print "- 魅族专属规则: 开启"
+    ui_print "- AsoulOpt 游戏规则: 开启"
 }
 
-preserve_existing_config() {
+# 升级安装时：仅继承用户的【开关状态】，其余（SoC 档位/时间）用本次探测值覆盖
+# 修正原彗星脚本直接整体覆盖 confige.txt 的问题——
+# 那样会导致换机或更新规则后档位仍是旧值
+merge_existing_config() {
     OLD_CONFIG=/data/adb/modules/Meizu_Thread/confige.txt
-    if [ -f "$OLD_CONFIG" ]; then
-        cp "$OLD_CONFIG" "$MODPATH/confige.txt"
-        ui_print "- 已保留现有 confige.txt"
-    fi
+    [ -f "$OLD_CONFIG" ] || return 0
+
+    for KEY in meizu asoul; do
+        VAL=$(grep -E "^${KEY}=" "$OLD_CONFIG" 2>/dev/null | head -n1 | cut -d= -f2- | tr -d '\r\n')
+        case "$VAL" in
+            on|off) sed -i "s|^${KEY}=.*|${KEY}=${VAL}|" "$MODPATH/confige.txt" ;;
+        esac
+    done
+
+    ui_print "- 已继承现有开关设置 (meizu/asoul)"
+
+    MZ=$(grep -E "^meizu=" "$MODPATH/confige.txt" | cut -d= -f2)
+    AS=$(grep -E "^asoul=" "$MODPATH/confige.txt" | cut -d= -f2)
+    MZ_NAME=Off; [ "$MZ" = "on" ] && MZ_NAME=On
+    AS_NAME=Off; [ "$AS" = "on" ] && AS_NAME=On
+    sed -i "/^description=/ s|^description=.*|description=魅族线程 $BASE_NAME 魅族:${MZ_NAME} Asoul:${AS_NAME}|" "$MODPATH/module.prop"
 }
 
 module_instructions() {
     ui_print "********************************************"
+    ui_print "- 安装完成，无需额外设置"
     ui_print "线程规则: /data/adb/modules/Meizu_Thread/applist.conf"
     ui_print "设备配置: /data/adb/modules/Meizu_Thread/confige.txt"
     ui_print "cpuset目录: /dev/cpuset/AkiAppOpt"
     ui_print "修改规则无需重启，会自动热加载"
-    ui_print "安装后可点击模块操作按钮重新拉取配置"
+    ui_print "如需调整开关，点击模块操作按钮"
     ui_print "********************************************"
 }
 
@@ -130,8 +135,8 @@ check_magisk_version
 check_required_files
 extract_bin
 detect_soc_profile
-setup_config
-preserve_existing_config
+write_config
+merge_existing_config
 module_instructions
 
 set_perm_recursive "$MODPATH" 0 0 0755 0644

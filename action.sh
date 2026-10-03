@@ -78,7 +78,7 @@ TIME_AREA="$(get_config_value time_area)"
 LAST_TIME="$(get_config_value time)"
 
 [ "$MEIZU_VAL" = "off" ] || MEIZU_VAL="on"
-[ "$ASOUL_VAL" = "on" ] || ASOUL_VAL="off"
+[ "$ASOUL_VAL" = "off" ] || ASOUL_VAL="on"
 [ "$SOC_8G3" = "on" ] || SOC_8G3="off"
 [ -n "$TIME_AREA" ] || TIME_AREA="UTC"
 

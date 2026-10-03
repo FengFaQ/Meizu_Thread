@@ -1,5 +1,5 @@
 meizu=on
-asoul=off
+asoul=on
 8G3=on
 soc_model=
 soc_platform=
