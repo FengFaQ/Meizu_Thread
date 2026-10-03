@@ -1,0 +1,15 @@
+# 构建脚本缓存
+__pycache__/
+*.pyc
+
+# 临时文件
+*.tmp
+.tmp_*
+.api_response.*
+AppOpt.pid
+affinity_manager.log
+
+# 系统文件
+.DS_Store
+Thumbs.db
+desktop.ini

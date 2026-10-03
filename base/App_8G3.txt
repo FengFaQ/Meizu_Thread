@@ -1,0 +1,565 @@
+#通讯
+# 微信
+com.tencent.mm{RenderThread}=p-core,hp-core
+com.tencent.mm{com.tencent.mm}=p-core,hp-core
+com.tencent.mm{default_matrix_}=hp-core
+com.tencent.mm{binder:*}=hp-core
+com.tencent.mm=hp-core
+
+# QQ
+com.tencent.mobileqq{RenderThread}=p-core,hp-core
+com.tencent.mobileqq{MediaCodec_loop}=p-core,hp-core
+com.tencent.mobileqq{encent.mobileqq}=p-core,hp-core
+com.tencent.mobileqq=hp-core
+
+# TIM
+com.tencent.tim{com.tencent.tim}=p-core,hp-core
+com.tencent.tim{RenderThread}=p-core,hp-core
+com.tencent.tim{HeapTaskDaemon}=p-core,hp-core
+com.tencent.tim=hp-core
+
+# Nekogram
+tw.nekomimi.nekogram{RenderThread}=p-core,hp-core
+tw.nekomimi.nekogram{files_database_}=hp-core
+tw.nekomimi.nekogram{searchQueue}=hp-core
+tw.nekomimi.nekogram{komimi.nekogram}=p-core,hp-core
+tw.nekomimi.nekogram=hp-core
+
+# telegram
+org.telegram.group{Thread-*}=p-core,hp-core
+org.telegram.group{RenderThread}=p-core,hp-core
+org.telegram.group{.telegram.group}=p-core,hp-core
+org.telegram.group=hp-core
+org.telegram.messenger{Thread-*}=p-core,hp-core
+org.telegram.messenger{RenderThread}=e-core,p-core,hp-core
+org.telegram.messenger{egram.messenger}=p-core,hp-core
+org.telegram.messenger=hp-core
+
+# Nagram X
+nu.gpu.nagram{Thread-*}=p-core,hp-core
+nu.gpu.nagram{RenderThread}=p-core,hp-core
+nu.gpu.nagram{nu.gpu.nagram}=p-core,hp-core
+nu.gpu.nagram=hp-core
+
+# Nagram
+xyz.nextalone.nagram{RenderThread}=p-core,hp-core
+xyz.nextalone.nagram{extalone.nagram}=p-core,hp-core
+xyz.nextalone.nagram{stageQueue}=p-core,hp-core
+xyz.nextalone.nagram{Thread-*}=hp-core
+xyz.nextalone.nagram=hp-core
+
+# Ayugram
+com.radolyn.ayugram{RenderThread}=p-core,hp-core
+com.radolyn.ayugram{radolyn.ayugram}=p-core,hp-core
+com.radolyn.ayugram{SpoilerEffectBi}=hp-core
+com.radolyn.ayugram{Thread-*}=p-core,hp-core
+com.radolyn.ayugram=hp-core
+
+# 钉钉
+com.alibaba.android.rimet{RenderThread}=p-core,hp-core
+com.alibaba.android.rimet{a.android.rimet}=p-core,hp-core
+com.alibaba.android.rimet{Doraemon-Proces}=hp-core
+com.alibaba.android.rimet=hp-core
+
+#购物
+# 淘宝
+com.taobao.taobao{WeexJSBridgeTh}=p-core,hp-core
+com.taobao.taobao{HeapTaskDaemon}=hp-core
+com.taobao.taobao{m.taobao.taobao}=p-core,hp-core
+com.taobao.taobao{8RYPVI8EZKhJUU}=hp-core
+com.taobao.taobao=hp-core
+
+# 京东
+com.jingdong.app.mall{RenderThread}=p-core,hp-core
+com.jingdong.app.mall{pool-15-thread-}=p-core,hp-core
+com.jingdong.app.mall{RunnerWrapper_8}=hp-core
+com.jingdong.app.mall{ngdong.app.mall}=p-core,hp-core
+com.jingdong.app.mall{JDFileDownloade}=hp-core
+com.jingdong.app.mall=hp-core
+
+# 拼多多
+com.xunmeng.pinduoduo{RenderThread}=p-core,hp-core
+com.xunmeng.pinduoduo{Chat#Single-Syn}=hp-core
+com.xunmeng.pinduoduo{Startup#RTDispa}=hp-core
+com.xunmeng.pinduoduo{nmeng.pinduoduo}=p-core,hp-core
+com.xunmeng.pinduoduo=hp-core
+
+# 闲鱼
+com.taobao.idlefish{RenderThread}=p-core,hp-core
+com.taobao.idlefish{1.ui}=hp-core
+com.taobao.idlefish{taobao.idlefish}=p-core,hp-core
+com.taobao.idlefish{1.raster}=hp-core
+com.taobao.idlefish=hp-core
+
+# 美团
+com.sankuai.meituan{RenderThread}=p-core,hp-core
+com.sankuai.meituan{sankuai.meituan}=p-core,hp-core
+com.sankuai.meituan{TTE-keyAgreemen}=hp-core
+com.sankuai.meituan=hp-core
+
+# 支付宝
+com.eg.android.AlipayGphone{RenderThread}=p-core,hp-core
+com.eg.android.AlipayGphone{crv-worker-thre}=hp-core
+com.eg.android.AlipayGphone{id.AlipayGphone}=p-core,hp-core
+com.eg.android.AlipayGphone=hp-core
+
+# 美团外卖
+com.sankuai.meituan.takeoutnew{RenderThread}=p-core,hp-core
+com.sankuai.meituan.takeoutnew{tuan.takeoutnew}=p-core,hp-core
+com.sankuai.meituan.takeoutnew{J*}=hp-core
+com.sankuai.meituan.takeoutnew=hp-core
+
+# 饿了么
+me.ele{me.ele}=hp-core
+me.ele{dp2ndk}=p-core
+me.ele{Xxdn-Worker}=p-core
+me.ele{1.raster}=p-core,hp-core
+me.ele{2.raster}=p-core,hp-core
+me.ele=hp-core
+
+#娱乐社媒
+# 哔哩哔哩
+tv.danmaku.bili{RenderThread}=p-core,hp-core
+tv.danmaku.bili{Thread*}=p-core,hp-core
+tv.danmaku.bili{IJK_External_Re}=p-core,hp-core
+tv.danmaku.bili{tv.danmaku.bili}=hp-core
+tv.danmaku.bili{MediaCodec_loop}=p-core,hp-core
+tv.danmaku.bili=hp-core
+
+# 哔哩哔哩Play
+com.bilibili.app.in{RenderThread}=p-core,hp-core
+com.bilibili.app.in{Thread*}=p-core,hp-core
+com.bilibili.app.in{IJK_External_Re}=p-core,hp-core
+com.bilibili.app.in{*.app.in}=hp-core
+com.bilibili.app.in{MediaCodec_loop}=p-core,hp-core
+com.bilibili.app.in=hp-core
+
+# piliplus
+com.example.piliplus{Thread-*}=p-core,hp-core
+com.example.piliplus{xample.piliplus}=p-core,hp-core
+com.example.piliplus{MediaCodec_loop}=p-core,hp-core
+com.example.piliplus{demux}=p-core,hp-core
+com.example.piliplus{1.raster}=p-core,hp-core
+com.example.piliplus=hp-core
+
+# 优乐享视频
+com.yishu.ylxsp{com.yishu.ylxsp}=p-core,hp-core
+com.yishu.ylxsp{MediaCodec_loop}=p-core,hp-core
+com.yishu.ylxsp{1.raster}=p-core,hp-core
+com.yishu.ylxsp=hp-core
+
+# 红果免费短剧
+com.phoenix.read{om.phoenix.read}=p-core,hp-core
+com.phoenix.read{RenderThread}=p-core,hp-core
+com.phoenix.read{Thread*}=p-core,hp-core
+com.phoenix.read=hp-core
+
+# komikku
+app.komikku.beta{pp.komikku.beta}=p-core,hp-core
+app.komikku.beta{*thread*}=p-core,hp-core
+app.komikku.beta{RenderThread}=p-core,hp-core
+app.komikku.beta{AsyncTask*}=hp-core
+app.komikku.beta=hp-core
+
+# kototoro
+org.skepsun.kototoro{RenderThread}=p-core
+org.skepsun.kototoro{kepsun.kototoro}=p-core
+org.skepsun.kototoro{DefaultDispatch}=hp-core
+org.skepsun.kototoro=p-core,hp-core
+
+#Readest
+com.bilingify.readest{lingify.readest}=p-core,hp-core
+com.bilingify.readest{RenderThread}=p-core,hp-core
+com.bilingify.readest{Chrome InProcGp}=hp-core
+com.bilingify.readest=hp-core
+
+# 快手
+com.smile.gifmaker{RenderThread}=p-core
+com.smile.gifmaker{smile.gifmaker}=p-core
+com.smile.gifmaker{MediaCodec_*}=p-core
+com.smile.gifmaker=hp-core
+
+# 快手极速版
+com.kuaishou.nebula{RenderThread}=p-core,hp-core
+com.kuaishou.nebula{kuaishou.nebula}=hp-core
+com.kuaishou.nebula{thread*}=p-core,hp-core
+com.kuaishou.nebula{*ffmpeg*}=p-core,hp-core
+com.kuaishou.nebula=hp-core
+
+# 爱奇艺
+com.qiyi.video{PLAYER_INFLATE_}=p-core
+com.qiyi.video{RenderThread}=p-core
+com.qiyi.video{DanmakuGLThread}=p-core
+com.qiyi.video{com.qiyi.video}=p-core
+com.qiyi.video{PumaPlyrVEgn}=p-core
+com.qiyi.video=hp-core
+
+# 优酷
+com.youku.phone{NDK MediaCodec}=p-core,hp-core
+com.youku.phone{Thread*}=p-core,hp-core
+com.youku.phone{com.youku.phone}=hp-core
+com.youku.phone=p-core,hp-core
+
+# 抖音 
+com.ss.android.ugc.aweme{*Thread}=p-core
+com.ss.android.ugc.aweme{VDecod2-*}=p-core
+com.ss.android.ugc.aweme{HeapTaskDaemon}=hp-core
+com.ss.android.ugc.aweme{danmaku-driver}=hp-core
+com.ss.android.ugc.aweme{droid.ugc.aweme}=hp-core
+com.ss.android.ugc.aweme{#pty-wqp-*}=hp-core
+com.ss.android.ugc.aweme=hp-core
+com.ss.android.ugc.aweme.lite{.ugc.aweme.lite}=p-core,hp-core
+com.ss.android.ugc.aweme.lite{*Thread}=p-core
+com.ss.android.ugc.aweme.lite{VDecod2-*}=p-core
+com.ss.android.ugc.aweme.lite{HeapTaskDaemon}=hp-core
+com.ss.android.ugc.aweme.lite{danmaku-driver}=hp-core
+com.ss.android.ugc.aweme.lite=hp-core
+
+# 抖音精选
+com.ss.android.yumme.video{RenderThread}=p-core,hp-core
+com.ss.android.yumme.video{oid.yumme.video}=p-core,hp-core
+com.ss.android.yumme.video{MediaCodec_loop}=p-core,hp-core
+com.ss.android.yumme.video{TRThread*}=p-core
+com.ss.android.yumme.video{VDecod*}=hp-core
+com.ss.android.yumme.video=hp-core
+
+# 纯粹直播
+com.mystyle.purelive{1.raster}=p-core,hp-core
+com.mystyle.purelive{ystyle.purelive}=p-core,hp-core
+com.mystyle.purelive{Thread-*}=hp-core
+com.mystyle.purelive=hp-core
+
+# 奇妙影视
+com.magicalstory.videos{RenderThread}=p-core,hp-core
+com.magicalstory.videos{MediaCodec_loop}=hp-core
+com.magicalstory.videos{calstory.videos}=p-core,hp-core
+com.magicalstory.videos=hp-core
+
+# 酷安
+com.coolapk.market{RenderThread}=p-core,hp-core
+com.coolapk.market{Thread-*}=p-core,hp-core
+com.coolapk.market{binder:*}=hp-core
+com.coolapk.market{.coolapk.market}=hp-core
+com.coolapk.market=hp-core
+
+# NGA玩家社区
+gov.pianzong.androidnga{zong.androidnga}=p-core,hp-core
+gov.pianzong.androidnga{RenderThread}=p-core,hp-core
+gov.pianzong.androidnga{Thread*}=hp-core
+gov.pianzong.androidnga=hp-core
+
+# 微博
+com.sina.weibo{RenderThread}=p-core,hp-core
+com.sina.weibo{Thread-*}=p-core,hp-core
+com.sina.weibo{com.sina.weibo}=hp-core
+com.sina.weibo=hp-core
+
+# 小黑盒
+com.max.xiaoheihe{RenderThread}=p-core,hp-core
+com.max.xiaoheihe{glide-animation}=hp-core
+com.max.xiaoheihe{m.max.xiaoheihe}=p-core,hp-core
+com.max.xiaoheihe=hp-core
+
+# 贴吧
+com.baidu.tieba{RenderThread}=p-core,hp-core
+com.baidu.tieba{com.baidu.tieba}=hp-core
+com.baidu.tieba=hp-core
+
+# 知乎
+com.zhihu.android{RenderThread}=p-core,hp-core
+com.zhihu.android{m.zhihu.android}=hp-core
+com.zhihu.android=hp-core
+
+# 四川集客
+com.inspur.mobilefsp{RenderThread}=p-core,hp-core
+com.inspur.mobilefsp{nspur.mobilefsp}=p-core,hp-core
+com.inspur.mobilefsp=hp-core
+com.inspur.mobilefsp:jse{RenderThread}=p-core,hp-core
+com.inspur.mobilefsp:jse{nspur.mobilefsp}=p-core,hp-core
+com.inspur.mobilefsp:jse=hp-core
+
+# X
+com.twitter.android{twitter.android}=hp-core
+com.twitter.android{RenderThread}=p-core,hp-core
+com.twitter.android{MediaCodec_loop}=p-core,hp-core
+com.twitter.android=hp-core
+
+# 悠悠有品
+com.uu898.uuhavequality:core{8.uuhavequality}=p-core,hp-core
+com.uu898.uuhavequality:core{RenderThread}=p-core,hp-core
+com.uu898.uuhavequality:core{BR-LagTrace-Thr}=p-core,hp-core
+com.uu898.uuhavequality:core=hp-core
+
+# YouTube
+com.google.android.youtube{android.youtube}=hp-core
+com.google.android.youtube{RenderThread}=p-core,hp-core
+com.google.android.youtube{ExoPlayer:Playb}=p-core,hp-core
+com.google.android.youtube{MediaCodec_loop}=p-core,hp-core
+com.google.android.youtube=hp-core
+
+# Facebook
+com.facebook.katana{facebook.katana}=hp-core
+com.facebook.katana{RenderThread}=p-core,hp-core
+com.facebook.katana{ComponentLavout}=p-core,hp-core
+com.facebook.katana=hp-core
+
+# Discord
+com.discord{com.discord}=hp-core
+com.discord{pool-10-thread-*}=p-core,hp-core
+com.discord{RenderThread}=p-core,hp-core
+com.discord{mqt_js}=hp-core
+com.discord=hp-core
+
+# 多邻国
+com.duolingo{com.duolingo}=hp-core
+com.duolingo{Thread-*}=p-core,hp-core
+com.duolingo{RenderThread}=p-core,hp-core
+com.duolingo=hp-core
+
+# 动漫共和国
+com.shizi.tool.p3{RenderThread}=p-core,hp-core
+com.shizi.tool.p3{imore.wallpaper}=p-core,hp-core
+com.shizi.tool.p3{glide-disk-cach}=hp-core
+com.shizi.tool.p3=hp-core
+
+#边缘视频
+com.hjmore.wallpaper{imore.wallpaper}=p-core,hp-core
+com.hjmore.wallpaper{RenderThread}=p-core,hp-core
+com.hjmore.wallpaper{HeapTaskDaemon}=hp-core
+com.hjmore.wallpaper=hp-core
+
+# 网易云音乐
+com.netease.cloudmusic{RenderThread}=p-core,hp-core
+com.netease.cloudmusic{ease.cloudmusic}=hp-core
+com.netease.cloudmusic{LooperTracer}=hp-core
+com.netease.cloudmusic=hp-core
+
+# 酷狗概念版
+com.kugou.android.lite{ou.android.lite}=hp-core
+com.kugou.android.lite{RenderThread}=p-core,hp-core
+com.kugou.android.lite=hp-core
+
+# 酷我音乐
+cn.kuwo.player{dMessageHandler}=p-core,hp-core
+cn.kuwo.player{RenderThread}=p-core,hp-core
+cn.kuwo.player{cdn.kuwo.cn*}=p-core,hp-core
+cn.kuwo.player{cn.kuwo.player}=hp-core
+cn.kuwo.player=hp-core
+
+# 汽水音乐
+com.luna.music{*.music}=hp-core
+com.luna.music{RenderThread}=p-core,hp-core
+com.luna.music=hp-core
+
+# Salt Player
+com.salt.music{com.salt.music}=hp-core
+com.salt.music{RenderThread}=p-core,hp-core
+com.salt.music=hp-core
+
+# 喜马拉雅
+com.ximalaya.ting.android{ya.ting.android}=hp-core
+com.ximalaya.ting.android{RenderThread}=p-core,hp-core
+com.ximalaya.ting.android=hp-core
+
+# Apple Music
+com.apple.android.music{*.music}=hp-core
+com.apple.android.music{RenderThread}=p-core,hp-core
+com.apple.android.music=hp-core
+
+# Lanerc
+com.xuzly.hy.lanerc.app{Thread-*}=p-core,hp-core
+com.xuzly.hy.lanerc.app{1.ui}=hp-core
+com.xuzly.hy.lanerc.app{mpv/demux}=hp-core
+com.xuzly.hy.lanerc.app{1.raster}=hp-core
+com.xuzly.hy.lanerc.app=hp-core
+
+# 起点读书
+com.qidian.QDReader{*.QDReader}=hp-core
+com.qidian.QDReader{RenderThread}=p-core,hp-core
+com.qidian.QDReader=hp-core
+
+# 番茄免费小说
+com.dragon.read{RenderThread}=p-core,hp-core
+com.dragon.read{HeapTaskDaemon}=hp-core
+com.dragon.read{com.dragon.read}=hp-core
+com.dragon.read=hp-core
+
+# 七猫小说
+com.kmxs.reader{*.reader}=hp-core
+com.kmxs.reader{RenderThread}=p-core,hp-core
+com.kmxs.reader=hp-core
+
+# 阅读(OSS)
+io.legado.app.release{ado.app.release}=p-core,hp-core
+io.legado.app.release{RenderThread}=p-core,hp-core
+io.legado.app.release{binder*}=hp-core
+io.legado.app.release=hp-core
+
+#地图
+# 高德地图  
+#com.autonavi.minimap{AJXBizCheck}=5-6  
+#com.autonavi.minimap{JavaScriptThrea}=5-6
+#com.autonavi.minimap{Map-Logical-0}=5-6 
+#com.autonavi.minimap{utonavi.minimap}=5-6
+#com.autonavi.minimap=5-6  
+
+# 百度地图  
+com.baidu.BaiduMap{31.1_0223536945}=hp-core
+com.baidu.BaiduMap{.31.1_062565145}=hp-core
+com.baidu.BaiduMap{.baidu.BaiduMap}=hp-core
+com.baidu.BaiduMap{*Thread}=p-core,hp-core
+com.baidu.BaiduMap=hp-core
+
+#工具型
+# 小猿搜题
+com.fenbi.android.solar{i.android.solar}=hp-core
+com.fenbi.android.solar{RenderThread}=p-core,hp-core
+com.fenbi.android.solar{VizWebView}=hp-core
+com.fenbi.android.solar{Chrome_InProcGp}=p-core,hp-core
+com.fenbi.android.solar=hp-core
+
+# 快对AI
+com.kuaiduizuoye.scan{aiduizuoye.scan}=p-core,hp-core
+com.kuaiduizuoye.scan{RenderThread}=p-core,hp-core
+com.kuaiduizuoye.scan{Chrome_IOThread}=hp-core
+com.kuaiduizuoye.scan=hp-core
+
+# 醒图(可能无效)
+com.xt.retouch{Signal Catcher}=p-core,hp-core
+com.xt.retouch{perfetto_hprof_}=p-core,hp-core
+com.xt.retouch{Jit thread pool}=p-core,hp-core
+com.xt.retouch=hp-core
+
+# 豆包
+com.larus.nova{RenderThread}=p-core,hp-core
+com.larus.nova{com.larus.nova}=p-core,hp-core
+com.larus.nova{MediaLoad}=p-core,hp-core
+com.larus.nova=hp-core
+
+# 3Dmark
+com.futuremark.dmandroid.application{Thread-??}=hp-core
+com.futuremark.dmandroid.application{*binder}=p-core
+com.futuremark.dmandroid.application=hp-core
+
+# chrome
+com.android.chrome{RenderThread}=p-core,hp-core
+com.android.chrome{.android.chrome}=hp-core
+com.android.chrome=hp-core
+
+# edge
+com.microsoft.emmx{RenderThread}=p-core,hp-core
+com.microsoft.emmx{.microsoft.emmx}=hp-core
+com.microsoft.emmx{Thread-*}=p-core,hp-core
+com.microsoft.emmx{NetworkService}=p-core,hp-core
+com.microsoft.emmx{hwuiTask*}=p-core,hp-core
+com.microsoft.emmx=hp-core
+
+# 顺丰同城骑士
+com.sfexpress.knight{fexpress.knight}=p-core,hp-core
+com.sfexpress.knight{RenderThread}=p-core,hp-core
+com.sfexpress.knight{binder}=hp-core
+com.sfexpress.knight=hp-core
+
+#360极速浏览器
+com.qihoo.contents{.qihoo.contents}=p-core,hp-core
+com.qihoo.contents{RenderThread}=p-core,hp-core
+com.qihoo.contents{Thread-*}=p-core,hp-core
+com.qihoo.contents{VizWebView}=hp-core
+com.qihoo.contents=hp-core
+
+# via
+mark.via{mark.via}=hp-core
+mark.via{RenderThread}=p-core,hp-core
+mark.via=hp-core
+
+# DeepSeek
+com.deepseek.chat{m.deepseek.chat}=hp-core
+com.deepseek.chat{RenderThread}=p-core,hp-core
+com.deepseek.chat=hp-core
+
+# 铁路12306
+com.MobileTicket{om.MobileTicket}=hp-core
+com.MobileTicket{RenderThread}=p-core,hp-core
+com.MobileTicket=hp-core
+
+# 同花顺
+com.hexin.plat.android{in.plat.android}=p-core
+com.hexin.plat.android{RenderThread}=p-core,hp-core
+com.hexin.plat.android{Thread*}=p-core,hp-core
+com.hexin.plat.android=hp-core
+
+# Breezy Weather
+org.breezyweather{RenderThread}=p-core,hp-core
+org.breezyweather{g.breezyweather}=hp-core
+org.breezyweather{Binder:*}=p-core,hp-core
+org.breezyweather=hp-core
+
+# 今日水印相机
+com.xhey.xcamera{om.xhey.xcamera}=p-core,hp-core
+com.xhey.xcamera{Algorithm-}=p-core
+com.xhey.xcamera{RxCachedThreadS}=hp-core
+com.xhey.xcamera=p-core,hp-core
+
+#玩机软件
+# Noactive
+cn.myflv.noactive{.myflv.noactive}=hp-core
+cn.myflv.noactive{RenderThread}=p-core,hp-core
+cn.myflv.noactive=hp-core
+
+#System
+# 将QQ音乐主进程绑定0,1,5
+com.tencent.qqmusic=e-core
+
+# 将微信输入法进程绑定0,1,5
+com.tencent.wetype:play=e-core
+
+# 将酷狗音乐后台播放的子进程绑定0,1,5
+com.kugou.android.support=e-core
+com.kugou.android.message=e-core
+
+# 将Push消息推送进程绑定0,1,5
+com.tencent.mm:push=e-core
+com.luna.music:push=e-core
+com.ss.android.ugc.aweme.mobile:push=e-core
+com.bilibili.app.in:pushservice=e-core
+tv.danmaku.bilibilihd:pushservice=e-core
+tv.danmaku.bili:pushservice=e-core
+com.tencent.mobileqq:MSF=e-core
+com.tencent.tim:MSF=e-core
+com.alibaba.android.rimet:push=e-core
+
+# 系统桌面
+com.android.launcher{RenderThread}=p-core,hp-core
+com.android.launcher{*.launcher}=p-core,hp-core
+com.android.launcher{binder*}=p-core,hp-core
+com.android.launcher=hp-core
+
+# pixel启动器
+com.google.android.apps.nexuslauncher{RenderThread}=p-core,hp-core
+com.google.android.apps.nexuslauncher{s.nexuslauncher}=p-core,hp-core
+com.google.android.apps.nexuslauncher{binder*}=p-core,hp-core
+com.google.android.apps.nexuslauncher=hp-core
+
+# launcher3
+com.android.launcher3{RenderThread}=p-core,hp-core
+com.android.launcher3{*.launcher3}=p-core,hp-core
+com.android.launcher3{binder*}=p-core,hp-core
+com.android.launcher3=hp-core
+
+# oneuilauncher
+com.sec.android.app.launcher{RenderThread}=p-core,hp-core
+com.sec.android.app.launcher{id.app.launcher}=p-core,hp-core
+com.sec.android.app.launcher{binder*}=p-core,hp-core
+com.sec.android.app.launcher=hp-core
+
+# flyme桌面
+com.meizu.flyme.launcher{.flyme.launcher}=p-core,hp-core
+com.meizu.flyme.launcher{binder*}=p-core,hp-core
+com.meizu.flyme.launcher{RenderThread}=p-core,hp-core
+com.meizu.flyme.launcher=hp-core
+
+# MIUI桌面
+com.miui.home{com.miui.home}=p-core,hp-core
+com.miui.home{RenderThread}=p-core,hp-core
+com.miui.home{binder*}=hp-core
+com.miui.home=hp-core

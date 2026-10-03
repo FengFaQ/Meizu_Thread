@@ -1,0 +1,7 @@
+meizu=on
+asoul=off
+8G3=on
+soc_model=
+soc_platform=
+time_area=UTC
+time=
