@@ -118,6 +118,18 @@ sh /data/adb/modules/Meizu_Thread/webui.sh set-rule 包名 线程名 核心
 sh /data/adb/modules/Meizu_Thread/webui.sh export          # 导出备份
 ```
 
+## 自检
+
+`tools/test_webui.sh` 会在**临时副本**上跑一遍后端全流程
+（生成规则、覆盖、增删改、备份往返、开关切换等 27 项），不会改动仓库文件：
+
+```sh
+sh tools/test_webui.sh
+```
+
+其中「规则体与仓库基线逐字节比对」一项，可确保改动后端后
+生成的规则仍与既有发布包**完全一致**。
+
 ## 发布包下载
 
 ```
