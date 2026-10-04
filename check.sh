@@ -20,12 +20,14 @@ CUSTOM="$MODDIR/custom_rules.tsv"
 PIDFILE="$MODDIR/AppOpt.pid"
 LOG="$MODDIR/affinity_manager.log"
 RULE_TMP="${TMPDIR:-/tmp}/meizu_rules.$$"
+OBS_TMP="${TMPDIR:-/tmp}/meizu_obs.$$"
+: > "$OBS_TMP" 2>/dev/null
 
 TARGET="$1"
 
 E_CPUS=""; P_CPUS=""; H_CPUS=""; ALL_CPUS=""
 
-cleanup() { rm -f "$RULE_TMP" "$RULE_TMP.2"; }
+cleanup() { rm -f "$RULE_TMP" "$RULE_TMP.2" "$OBS_TMP"; }
 trap cleanup EXIT HUP INT TERM
 
 # ---------------------------------------------------------------
@@ -320,7 +322,7 @@ fi
 # ===============================================================
 # 4. 拓扑与符号展开
 # ===============================================================
-printf '\n[4] 本机拓扑与符号展开\n'
+printf '\n[4] 本机拓扑与符号展开（脚本推算，仅作对照）\n'
 if detect_topo; then
     printf '  e-core   → CPU %s\n' "$(norm_cpus "$E_CPUS")"
     printf '  p-core   → CPU %s\n' "$(norm_cpus "$P_CPUS")"
@@ -328,6 +330,9 @@ if detect_topo; then
     printf '  all-core → CPU %s\n' "$(norm_cpus "$ALL_CPUS")"
     NCLUSTER="$(printf '%s\n' "$E_CPUS" "$P_CPUS" "$H_CPUS" | grep -c .)"
     printf '  簇数            : %s\n' "$NCLUSTER"
+    printf '  ℹ️  以上按「首簇=e-core、末簇=hp-core、中间=p-core」推算。\n'
+    printf '      引擎的**真实**展开请以第 6 节实测（cpuset 目录名 / 实际 CPU 列表）为准。\n'
+    printf '      若两者不一致，说明引擎的划分规则与此推算不同，请把本页输出反馈给作者。\n'
 else
     printf '  ❌ 无法探测 cpufreq，符号名无法展开\n'
 fi
@@ -383,6 +388,8 @@ report_app() {
             act_raw="$(ALLOWED "$t/status")"
             act="$(norm_cpus "$act_raw")"
             cs="$(CSET "/proc/$tid/cpuset")"
+            # 记录「规则符号 → 实际 CPU」这一实测对应关系
+            printf '%s\t%s\t%s\n' "$exp_core" "${act_raw:-?}" "${cs:-?}" >> "$OBS_TMP" 2>/dev/null
             if [ "$act" = "$exp" ]; then
                 OKN=$((OKN + 1))
                 if [ "$FULL" = "1" ]; then
@@ -398,6 +405,15 @@ report_app() {
         [ "$BADN" -eq 0 ] && [ "$MATCH" -gt 0 ] && printf '       ✅ 该进程绑核符合规则\n'
     done
     return 0
+}
+
+echo_obs() {
+    [ -s "$OBS_TMP" ] || return 0
+    printf '\n  ── 引擎符号 → 实测 CPU（由「实际生效的规则」反推，最可信）\n'
+    sort -u "$OBS_TMP" | while IFS="$(printf '\t')" read -r sym cpus cset; do
+        [ -n "$sym" ] || continue
+        printf '     %-22s → %-12s %s\n' "$sym" "$cpus" "$cset"
+    done
 }
 
 if [ -n "$TARGET" ] && [ "$TARGET" != "--selftest" ]; then
@@ -417,7 +433,10 @@ else
         case "$cl" in
             */*|*" "*) continue ;;
         esac
-        report_app "$cl" 0 >/dev/null 2>&1 || continue
+        # 先廉价判断：该进程名有规则、且确实有活动进程
+        rules_for_name "$cl" > "$RULE_TMP" 2>/dev/null
+        [ -s "$RULE_TMP" ] || continue
+        pids_for_name "$cl" | grep -q . || continue
         report_app "$cl" 0
         FOUND=$((FOUND + 1))
         [ "$FOUND" -ge 3 ] && break
@@ -427,6 +446,8 @@ else
         printf '      请先启动一个已适配的应用（如微信、浏览器、桌面），再运行本脚本。\n'
     fi
 fi
+
+echo_obs
 
 # ===============================================================
 # 结论
@@ -439,7 +460,8 @@ printf ' 2) [3] 两个计数必须为 0，否则有规则被引擎丢弃。\n'
 printf ' 3) [4] 的展开结果应与机型预期一致（魅族21 为 2+3+2+1）。\n'
 printf ' 4) [6] 的「异常」为 0 才算绑核真正生效：\n'
 printf '      · 实际 = 期望            → 正常\n'
-printf '      · 实际 ≠ 期望 且 cpuset=/AkiAppOpt/... → 引擎生效了但结果不符，请反馈\n'
+printf '      · 实际 ≠ 期望 且 cpuset=/AkiAppOpt/<列表> → 引擎生效了，\n'
+printf '        且该 <列表> **就是引擎对该规则符号的真实展开**，请据此核对/反馈\n'
 printf '      · 实际 ≠ 期望 且 cpuset=/top-app 等  → 被 Android 自身 cpuset 覆盖\n'
 printf '      · 实际 = 0-7（全部核心）           → 规则未匹配到该线程\n'
 printf ' 5) 改规则后无需重启：在 WebUI 保存后再跑本脚本，应即时反映。\n'
