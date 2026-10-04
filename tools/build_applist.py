@@ -2,6 +2,12 @@
 """
 组装最终 applist.conf
 
+⚠️ 自 2.0 起，applist.conf 由模块内的 `webui.sh apply` 在运行时生成，
+   本脚本仅作为**构建期参考实现与等价性校验基准**保留。
+   （两者生成的「规则体」已验证逐字节一致；差异仅在文件头注释。）
+
+   运行 `sh webui.sh apply` 即可重新生成，WebUI 每次改动配置也会自动调用。
+
 结构（按加载顺序，越靠前越先写入；引擎按优先级与规则顺序匹配）：
     1. 彗星 App_8G3    —— 彗星的日用应用规则（底座）
     2. 彗星 Game_8G3   —— 【已移除】被 AsoulOpt 段替换
@@ -11,6 +17,7 @@
 冲突处理：
     彗星原有 com.meizu.flyme.launcher 规则与 RS 提取的魅族规则重复，
     以 RS（魅族专用来源）为准，故从彗星段中删除该包。
+    —— 此「包级覆盖」规则已同步实现在 webui.sh 的 build_pkg_set / filter_source。
 """
 import io, os, re
 

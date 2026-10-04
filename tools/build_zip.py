@@ -21,7 +21,7 @@ OUTDIR = r"C:\xiancheng\创作工作\04_魅族适配_产出物"
 #   2) 仓库内 out/          —— 随 git 推送，可直接用 raw 链接下载
 LOCAL_OUT = r"C:\xiancheng\out"
 ARCHIVE_DIR = os.path.join(REPO, "out")
-VERSION = "1.0"
+VERSION = "2.0"
 ZIPNAME = f"Meizu_Thread_{VERSION}.zip"
 
 # zip 内需要包含的条目
@@ -29,14 +29,16 @@ INCLUDE_FILES = [
     "module.prop",
     "confige.txt",
     "applist.conf",
+    "custom_rules.tsv",
     "meizu_rules.conf",
     "asoulopt_rules.conf",
     "action.sh",
+    "webui.sh",
     "customize.sh",
     "service.sh",
     "致谢名单.md",
 ]
-INCLUDE_DIRS = ["bin", "META-INF", "base"]
+INCLUDE_DIRS = ["bin", "META-INF", "base", "webroot"]
 
 # 不应进 zip 的
 EXCLUDE_NAMES = {".git", ".gitignore", "README.md", "update.json", "changelog.md", "__pycache__"}

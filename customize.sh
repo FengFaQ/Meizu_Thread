@@ -7,7 +7,7 @@ SKIPUNZIP=0
 #   - 目标机型固定为魅族21(骁龙8Gen3)，无需选档
 #   - 魅族专属规则为本模块核心，默认启用
 #   - 游戏线程由 AsoulOpt 承担，默认启用（不再询问是否使用游戏线程）
-#   - 如需更改，安装后在 WebUI(confige.txt) 中调整
+#   - 安装后通过 KernelSU 的 WebUI 图形化调整（开关/自定义线程/备份导入）
 # ============================================================
 
 check_magisk_version() {
@@ -120,14 +120,36 @@ merge_existing_config() {
     sed -i "/^description=/ s|^description=.*|description=魅族线程 $BASE_NAME 魅族:${MZ_NAME} Asoul:${AS_NAME}|" "$MODPATH/module.prop"
 }
 
+# 升级安装时：保留用户的自定义线程规则
+# 模块升级会整体覆盖文件，若不显式保留，用户辛苦调好的规则会被清空。
+restore_custom_rules() {
+    OLD_RULES=/data/adb/modules/Meizu_Thread/custom_rules.tsv
+    [ -f "$OLD_RULES" ] || return 0
+
+    # 仅当旧文件里确实存在规则行时才覆盖，避免把「只有注释」的空文件搬过来
+    if grep -qE '^[^#[:space:]]' "$OLD_RULES" 2>/dev/null; then
+        cp "$OLD_RULES" "$MODPATH/custom_rules.tsv"
+        RULE_N=$(grep -cE '^[^#[:space:]]' "$OLD_RULES" 2>/dev/null)
+        ui_print "- 已保留现有自定义线程规则 ($RULE_N 条)"
+    else
+        ui_print "- 未发现自定义规则，跳过保留"
+    fi
+}
+
 module_instructions() {
     ui_print "********************************************"
     ui_print "- 安装完成，无需额外设置"
+    ui_print "- 请在 KernelSU 中点击本模块的【WebUI】按钮进行图形化配置"
+    ui_print "    · 彗星底座 / 魅族专属 / AsoulOpt 三个开关"
+    ui_print "    · 自定义线程：为任意应用自由增删改绑核规则"
+    ui_print "    · 备份 / 导入：一键导出到 Download 并可恢复"
+    ui_print "- 若管理器无 WebUI（如 Magisk），点击【操作】按钮亦可应用配置"
+    ui_print "********************************************"
     ui_print "线程规则: /data/adb/modules/Meizu_Thread/applist.conf"
     ui_print "设备配置: /data/adb/modules/Meizu_Thread/confige.txt"
+    ui_print "自定义规则: /data/adb/modules/Meizu_Thread/custom_rules.tsv"
     ui_print "cpuset目录: /dev/cpuset/AkiAppOpt"
     ui_print "修改规则无需重启，会自动热加载"
-    ui_print "如需调整开关，点击模块操作按钮"
     ui_print "********************************************"
 }
 
@@ -137,6 +159,7 @@ extract_bin
 detect_soc_profile
 write_config
 merge_existing_config
+restore_custom_rules
 module_instructions
 
 set_perm_recursive "$MODPATH" 0 0 0755 0644
@@ -144,3 +167,6 @@ for SCRIPT in "$MODPATH"/*.sh; do
     [ -f "$SCRIPT" ] && set_perm "$SCRIPT" 0 2000 0755 u:object_r:magisk_file:s0
 done
 set_perm "$MODPATH/AppOpt" 0 2000 0755 u:object_r:magisk_file:s0
+
+# webroot 供 KernelSU/APatch WebUI 读取
+[ -d "$MODPATH/webroot" ] && set_perm_recursive "$MODPATH/webroot" 0 0 0755 0644
