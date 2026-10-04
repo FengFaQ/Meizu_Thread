@@ -1,14 +1,19 @@
 SKIPUNZIP=0
 
 # ============================================================
-# 魅族线程 (Meizu Thread) 安装脚本
+# 魅族线程 (Meizu Thread) v3.0 安装脚本
 #
-# 设计：全自动安装，无任何交互询问。
-#   - 目标机型固定为魅族21(骁龙8Gen3)，无需选档
-#   - 魅族专属规则为本模块核心，默认启用
-#   - 游戏线程由 AsoulOpt 承担，默认启用（不再询问是否使用游戏线程）
-#   - 安装后通过 KernelSU 的 WebUI 图形化调整（开关/自定义线程/备份导入）
+# 与 v2.0 的区别：本版不再自带线程引擎，
+#   · 用户线程 → 写入 Scene（com.omarea.vtools）的 threads.json，由 Scene 生效
+#   · 游戏线程 → 由捆绑的 AsoulOpt 负责（其逻辑一字未改，只是安装位置
+#                由 /data/adb/modules/asoul_affinity_opt 移到本模块的 asoulopt/ 子目录）
+#
+# 全自动安装，无任何交互询问。
 # ============================================================
+
+MODID=Meizu_Thread
+NAKI_DIR=/data/adb/naki
+ASOPT_CONF="$NAKI_DIR/asopt.conf"
 
 check_magisk_version() {
     ui_print "- Magisk version: $MAGISK_VER_CODE"
@@ -33,140 +38,87 @@ check_required_files() {
     done
 }
 
-extract_bin() {
+# Scene 是本模块「用户线程」的实际执行者，没装则配置无处生效
+check_scene() {
     ui_print "********************************************"
-    case "$ARCH" in
-        arm) SOURCE_BIN="$MODPATH/bin/armeabi-v7a/AppOpt" ;;
-        arm64) SOURCE_BIN="$MODPATH/bin/arm64-v8a/AppOpt" ;;
-        x64) SOURCE_BIN="$MODPATH/bin/x86_64/AppOpt" ;;
-        *) abort "! Unsupported platform: $ARCH" ;;
-    esac
-
-    ui_print "- Device platform: $ARCH"
-    [ -f "$SOURCE_BIN" ] || abort "! 当前架构缺少 AppOpt 二进制文件"
-    cp "$SOURCE_BIN" "$MODPATH/AppOpt"
-    rm -rf "$MODPATH/bin"
-    chmod a+x "$MODPATH/AppOpt"
-    "$MODPATH/AppOpt" -v || abort "! 主程序验证失败，请检查模块 zip 文件是否损坏"
-}
-
-# 探测底座档位（8G3 走 8G3 规则，其余走通用规则）
-# 不询问用户，纯自动判定
-detect_soc_profile() {
-    SOC_MODEL=$(getprop ro.soc.model)
-    SOC_PLATFORM=$(getprop ro.board.platform)
-    SOC_HARDWARE=$(getprop ro.hardware)
-    SOC_ID=$(printf '%s %s %s' "$SOC_MODEL" "$SOC_PLATFORM" "$SOC_HARDWARE" | tr '[:upper:]' '[:lower:]')
-
-    case "$SOC_ID" in
-        *sm8650*|*pineapple*)
-            SOC_8G3=on
-            BASE_NAME=8G3
-            ;;
-        *)
-            SOC_8G3=off
-            BASE_NAME=Common
-            ;;
-    esac
-
-    ui_print "********************************************"
-    ui_print "- SoC model: ${SOC_MODEL:-unknown}"
-    ui_print "- SoC platform: ${SOC_PLATFORM:-unknown}"
-    ui_print "- 彗星底座: $BASE_NAME"
-}
-
-# 写入默认配置（全部默认启用，无交互）
-write_config() {
-    TIME_AREA=$(getprop persist.sys.timezone)
-    [ -n "$TIME_AREA" ] || TIME_AREA=UTC
-    UTC_TIME=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-
-    cat > "$MODPATH/confige.txt" << configEOF
-meizu=on
-asoul=on
-8G3=$SOC_8G3
-soc_model=$SOC_MODEL
-soc_platform=$SOC_PLATFORM
-time_area=$TIME_AREA
-time=$UTC_TIME
-configEOF
-
-    sed -i "/^description=/ s|^description=.*|description=魅族线程 $BASE_NAME 魅族:On Asoul:On|" "$MODPATH/module.prop"
-    ui_print "- 彗星底座: $BASE_NAME"
-    ui_print "- 魅族专属规则: 开启"
-    ui_print "- AsoulOpt 游戏规则: 开启"
-}
-
-# 升级安装时：仅继承用户的【开关状态】，其余（SoC 档位/时间）用本次探测值覆盖
-# 修正原彗星脚本直接整体覆盖 confige.txt 的问题——
-# 那样会导致换机或更新规则后档位仍是旧值
-merge_existing_config() {
-    OLD_CONFIG=/data/adb/modules/Meizu_Thread/confige.txt
-    [ -f "$OLD_CONFIG" ] || return 0
-
-    for KEY in meizu asoul; do
-        VAL=$(grep -E "^${KEY}=" "$OLD_CONFIG" 2>/dev/null | head -n1 | cut -d= -f2- | tr -d '\r\n')
-        case "$VAL" in
-            on|off) sed -i "s|^${KEY}=.*|${KEY}=${VAL}|" "$MODPATH/confige.txt" ;;
-        esac
-    done
-
-    ui_print "- 已继承现有开关设置 (meizu/asoul)"
-
-    MZ=$(grep -E "^meizu=" "$MODPATH/confige.txt" | cut -d= -f2)
-    AS=$(grep -E "^asoul=" "$MODPATH/confige.txt" | cut -d= -f2)
-    MZ_NAME=Off; [ "$MZ" = "on" ] && MZ_NAME=On
-    AS_NAME=Off; [ "$AS" = "on" ] && AS_NAME=On
-    sed -i "/^description=/ s|^description=.*|description=魅族线程 $BASE_NAME 魅族:${MZ_NAME} Asoul:${AS_NAME}|" "$MODPATH/module.prop"
-}
-
-# 升级安装时：保留用户的自定义线程规则
-# 模块升级会整体覆盖文件，若不显式保留，用户辛苦调好的规则会被清空。
-restore_custom_rules() {
-    OLD_RULES=/data/adb/modules/Meizu_Thread/custom_rules.tsv
-    [ -f "$OLD_RULES" ] || return 0
-
-    # 仅当旧文件里确实存在规则行时才覆盖，避免把「只有注释」的空文件搬过来
-    if grep -qE '^[^#[:space:]]' "$OLD_RULES" 2>/dev/null; then
-        cp "$OLD_RULES" "$MODPATH/custom_rules.tsv"
-        RULE_N=$(grep -cE '^[^#[:space:]]' "$OLD_RULES" 2>/dev/null)
-        ui_print "- 已保留现有自定义线程规则 ($RULE_N 条)"
+    if command -v pm >/dev/null 2>&1 && pm list packages 2>/dev/null | grep -q "com.omarea.vtools"; then
+        ui_print "- 已检测到 Scene (com.omarea.vtools)"
     else
-        ui_print "- 未发现自定义规则，跳过保留"
+        ui_print "! 未检测到 Scene (com.omarea.vtools)"
+        ui_print "! 「用户线程」会把配置写入 Scene 的 threads.json，"
+        ui_print "! 未安装 Scene 时该部分不会生效（游戏线程不受影响）"
+    fi
+}
+
+# 生成 AsoulOpt 的配置文件
+# 内容格式与上游 customize.sh 生成的一致（同样的说明注释 + mode= / rt= + 每游戏覆盖）
+# 仅在文件不存在时创建，绝不覆盖用户已有配置
+ensure_asopt_conf() {
+    mkdir -p "$NAKI_DIR" 2>/dev/null
+    if [ -f "$ASOPT_CONF" ]; then
+        ui_print "- AsoulOpt 配置已存在，保留不覆盖：$ASOPT_CONF"
+        return 0
+    fi
+    cat > "$ASOPT_CONF" << 'ASOPTEOF'
+# mode：运行模式 / Operation Mode
+# 0：硬亲和，理论上表现更好 / Affinity, performs better in theory
+# 1：软迁移，帧率可能更稳定 / Soft migrate, fps maybe more stable
+# 2：硬迁移，帧率可能更稳定 / Hard migrate, fps maybe more stable
+
+# rt：实时模式 / Real-Time Mode
+# 0：调度器默认行为 / Scheduler default behavior
+# 1：可能更流畅，但可能导致卡死 / maybe smoother, but may cause freeze
+
+# 可对游戏单独指定 mode 和 rt / Per-game override of mode and rt
+# 格式 / Format：包名(package name) mode rt
+# 例 / Example：com.miHoYo.Yuanshen 0 0
+# 一行一个，未匹配的游戏使用上面的全局值
+# One per line, global values above as fallback
+
+# ***保存后即时应用，切换游戏后生效***
+# ***Applied on save, effective on next app switch***
+
+mode=0
+rt=0
+ASOPTEOF
+    ui_print "- 已生成 AsoulOpt 默认配置：$ASOPT_CONF"
+}
+
+# 捆绑的 AsoulOpt 需要可执行
+prepare_asoulopt() {
+    if [ -f "$MODPATH/asoulopt/AsoulOpt" ]; then
+        set_perm "$MODPATH/asoulopt/AsoulOpt" 0 0 0755
+        set_perm "$MODPATH/asoulopt/service.sh" 0 0 0755
+        ui_print "- AsoulOpt 已就位：$MODPATH/asoulopt/"
+    else
+        ui_print "! 警告：缺少 asoulopt/AsoulOpt，游戏线程将不可用"
     fi
 }
 
 module_instructions() {
     ui_print "********************************************"
-    ui_print "- 安装完成，无需额外设置"
-    ui_print "- 请在 KernelSU 中点击本模块的【WebUI】按钮进行图形化配置"
-    ui_print "    · 彗星底座 / 魅族专属 / AsoulOpt 三个开关"
-    ui_print "    · 自定义线程：为任意应用自由增删改绑核规则"
-    ui_print "    · 备份 / 导入：一键导出到 Download 并可恢复"
-    ui_print "- 若管理器无 WebUI（如 Magisk），点击【操作】按钮亦可应用配置"
+    ui_print "- 安装完成"
+    ui_print "- 请在 KernelSU 中点击本模块的【WebUI】按钮："
+    ui_print "    · 用户线程：编辑 Scene 的线程核心分配（已预置魅族线程默认值）"
+    ui_print "    · 游戏线程：AsoulOpt 游戏清单与 mode / rt 设置"
     ui_print "********************************************"
-    ui_print "线程规则: /data/adb/modules/Meizu_Thread/applist.conf"
-    ui_print "设备配置: /data/adb/modules/Meizu_Thread/confige.txt"
-    ui_print "自定义规则: /data/adb/modules/Meizu_Thread/custom_rules.tsv"
-    ui_print "cpuset目录: /dev/cpuset/AkiAppOpt"
-    ui_print "修改规则无需重启，会自动热加载"
+    ui_print "用户线程配置: /data/user/0/com.omarea.vtools/files/threads.json"
+    ui_print "默认用户线程: /data/adb/modules/$MODID/default_threads.json"
+    ui_print "游戏线程配置: $ASOPT_CONF"
+    ui_print "捆绑 AsoulOpt: /data/adb/modules/$MODID/asoulopt/"
     ui_print "********************************************"
 }
 
 check_magisk_version
 check_required_files
-extract_bin
-detect_soc_profile
-write_config
-merge_existing_config
-restore_custom_rules
+check_scene
+ensure_asopt_conf
+prepare_asoulopt
 module_instructions
 
 set_perm_recursive "$MODPATH" 0 0 0755 0644
 for SCRIPT in "$MODPATH"/*.sh; do
     [ -f "$SCRIPT" ] && set_perm "$SCRIPT" 0 2000 0755 u:object_r:magisk_file:s0
 done
-set_perm "$MODPATH/AppOpt" 0 2000 0755 u:object_r:magisk_file:s0
-
-# webroot 供 KernelSU/APatch WebUI 读取
+[ -d "$MODPATH/asoulopt" ] && set_perm_recursive "$MODPATH/asoulopt" 0 0 0755 0755
 [ -d "$MODPATH/webroot" ] && set_perm_recursive "$MODPATH/webroot" 0 0 0755 0644

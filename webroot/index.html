@@ -1,240 +1,139 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="color-scheme" content="dark">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-visual">
 <title>魅族线程</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div id="noksu" class="banner hidden">
-  未检测到 KernelSU 接口。请用 <b>KernelSU / KernelSU-Next / APatch</b> 管理器打开本模块的 WebUI。
+<div id="env-banner" class="env-banner" style="display:none">
+  ⚠️ 未检测到 Root WebUI 接口，请在 KernelSU 管理器 / APatch 的模块 WebUI 中打开本页面。
 </div>
 
-<header class="top">
-  <div class="titlerow">
-    <h1>魅族线程</h1>
-    <span id="ver" class="chip">—</span>
+<!-- ============ 用户线程（写入 Scene 的 threads.json）============ -->
+<section id="screen-list" class="screen">
+  <header class="topbar">
+    <div class="topbar-title">
+      <h1>魅族线程</h1>
+      <div id="status" class="status">正在初始化…</div>
+    </div>
+    <div class="topbar-actions">
+      <button id="btn-settings" class="icon-btn" title="设置">设置</button>
+      <button id="btn-reload" class="icon-btn" title="重新读取文件">刷新</button>
+      <button id="btn-raw" class="icon-btn" title="原始 JSON">JSON</button>
+    </div>
+  </header>
+
+  <div class="modetabs">
+    <button class="modetab active" data-root="list">用户线程</button>
+    <button class="modetab" data-root="asoul">游戏线程</button>
   </div>
-  <div id="devline" class="sub">加载中…</div>
-</header>
 
-<nav class="tabs" id="tabs">
-  <button class="tab active" data-tab="overview">总览</button>
-  <button class="tab" data-tab="engine">引擎</button>
-  <button class="tab" data-tab="custom">自定义线程</button>
-  <button class="tab" data-tab="backup">备份</button>
-</nav>
+  <div id="default-hint" class="default-hint" style="display:none">
+    <span id="default-hint-text"></span>
+    <button id="btn-load-default" class="btn-secondary small">载入默认</button>
+  </div>
 
-<main>
+  <div id="list" class="list"></div>
 
-  <!-- ============ 总览 ============ -->
-  <section id="pane-overview" class="pane active">
+  <div class="fab-row">
+    <button id="btn-add" class="fab" title="添加规则">＋</button>
+  </div>
 
-    <div class="card">
-      <h2>规则统计</h2>
-      <div class="stats" id="stats"></div>
+  <div class="bottom-bar">
+    <button id="btn-import" class="btn-secondary" title="从 JSON 文件导入">导入</button>
+    <button id="btn-export" class="btn-secondary" title="导出到 JSON 文件">导出</button>
+    <button id="btn-save" class="btn-primary">保存</button>
+  </div>
+</section>
+
+<!-- ============ 游戏线程（AsoulOpt 配置）============ -->
+<section id="screen-asoul" class="screen" style="display:none">
+  <header class="topbar">
+    <div class="topbar-title">
+      <h1>游戏线程</h1>
+      <div id="asoul-status" class="status">加载中…</div>
     </div>
-
-    <div class="card">
-      <h2>实测拓扑</h2>
-      <div class="topo" id="topo"></div>
-      <p class="hint">符号核心名由引擎在运行时按上表展开为实际 CPU。</p>
+    <div class="topbar-actions">
+      <button id="btn-asoul-reload" class="icon-btn" title="重新读取">刷新</button>
     </div>
+  </header>
 
-    <div class="card">
-      <h2>开关</h2>
-      <label class="row">
-        <span>彗星底座 · 8G3 档</span>
-        <input type="checkbox" id="sw-g83" class="sw">
-      </label>
-      <label class="row">
-        <span>魅族专属规则</span>
-        <input type="checkbox" id="sw-meizu" class="sw">
-      </label>
-      <label class="row">
-        <span>AsoulOpt 游戏规则</span>
-        <input type="checkbox" id="sw-asoul" class="sw">
-      </label>
-      <p class="hint">关闭「8G3 档」将改用通用底座（非骁龙 8Gen3 设备）。</p>
-      <div class="btns">
-        <button class="btn primary" id="btn-apply">应用配置</button>
-        <button class="btn" id="btn-update">在线更新规则</button>
-      </div>
+  <div class="modetabs">
+    <button class="modetab" data-root="list">用户线程</button>
+    <button class="modetab active" data-root="asoul">游戏线程</button>
+  </div>
+
+  <div id="asoul-body" class="list"></div>
+</section>
+
+<section id="screen-editor" class="screen" style="display:none">
+  <header class="topbar">
+    <button id="btn-back" class="icon-btn">‹ 返回</button>
+    <div class="topbar-title">
+      <h1 id="editor-title">查看规则</h1>
     </div>
-
-    <div class="card">
-      <h2>运行状态</h2>
-      <div class="kv" id="runtime"></div>
+    <div class="topbar-actions">
+      <button id="btn-editor-save" class="btn-primary small">保存</button>
     </div>
+  </header>
+  <div id="editor-form" class="editor-form"></div>
+</section>
 
-  </section>
-
-  <!-- ============ 引擎 ============ -->
-  <section id="pane-engine" class="pane">
-
-    <div class="card">
-      <h2>AkiAppOpt 引擎参数</h2>
-      <p class="hint">
-        来自上游二进制的命令行选项（<code>-c / -s / -b / -h / -v</code>）。
-        修改后需重启引擎才生效。
-      </p>
-      <label class="field"><span>扫描间隔 -s（秒）</span>
-        <input id="en-interval" class="input" type="number" min="1" max="3600" step="1" inputmode="numeric">
-      </label>
-      <p class="hint">范围 1–3600，上游原生默认 <b>2</b>。越小越灵敏、越耗电。</p>
-      <label class="field"><span>cpuset 目录名 -b</span>
-        <input id="en-cpuset" class="input" type="text" spellcheck="false">
-      </label>
-      <p class="hint">上游原生默认 <b>AkiAppOpt</b>；对应 <code>/dev/cpuset/&lt;名字&gt;/</code>。</p>
-      <div class="btns">
-        <button class="btn primary" id="btn-engine-save">保存并重启引擎</button>
-      </div>
+<section id="screen-raw" class="screen" style="display:none">
+  <header class="topbar">
+    <button id="btn-raw-back" class="icon-btn">‹ 返回</button>
+    <div class="topbar-title">
+      <h1>原始 JSON</h1>
     </div>
+    <button id="btn-raw-apply" class="btn-primary small">应用</button>
+  </header>
+  <textarea id="raw-textarea" class="raw-textarea" spellcheck="false"></textarea>
+</section>
 
-    <div class="card">
-      <h2>AsoulOpt 运行模式</h2>
-      <div class="hint" id="asopt-status">加载中…</div>
-
-      <label class="field"><span>mode — 运行模式</span></label>
-      <div class="seg" id="seg-asopt-mode">
-        <button data-val="0">0 硬亲和</button>
-        <button data-val="1">1 软迁移</button>
-        <button data-val="2">2 硬迁移</button>
-      </div>
-      <p class="hint">
-        0 硬亲和，理论上表现更好 · 1 软迁移，帧率可能更稳定 · 2 硬迁移，帧率可能更稳定
-      </p>
-
-      <label class="field"><span>rt — 实时模式</span></label>
-      <div class="seg" id="seg-asopt-rt">
-        <button data-val="0">0 调度器默认</button>
-        <button data-val="1">1 实时</button>
-      </div>
-      <p class="hint">0 调度器默认行为 · 1 可能更流畅，但<b>可能导致卡死</b></p>
-
-      <div class="btns">
-        <button class="btn primary" id="btn-asopt-save">保存全局设置</button>
-      </div>
-      <p class="hint">保存后即时应用，切换游戏后生效。</p>
+<section id="screen-settings" class="screen" style="display:none">
+  <header class="topbar">
+    <button id="btn-settings-back" class="icon-btn">‹ 返回</button>
+    <div class="topbar-title">
+      <h1>设置</h1>
     </div>
+    <span></span>
+  </header>
+  <div id="settings-form" class="settings-form"></div>
+</section>
 
-    <div class="card">
-      <h2>每游戏单独配置</h2>
-      <p class="hint">为某个游戏覆盖上面的全局值；一行一个，未列出的游戏使用全局值。</p>
-      <div id="asopt-games" class="rules"></div>
-
-      <label class="field"><span>包名</span>
-        <input id="as-pkg" class="input" type="text" spellcheck="false" list="pkg-list"
-          placeholder="com.miHoYo.Yuanshen">
-      </label>
-      <datalist id="pkg-list"></datalist>
-      <label class="field"><span>mode</span>
-        <select id="as-mode" class="input">
-          <option value="0">0 — 硬亲和</option>
-          <option value="1">1 — 软迁移</option>
-          <option value="2">2 — 硬迁移</option>
-        </select>
-      </label>
-      <label class="field"><span>rt</span>
-        <select id="as-rt" class="input">
-          <option value="0">0 — 调度器默认</option>
-          <option value="1">1 — 实时</option>
-        </select>
-      </label>
-      <div class="btns">
-        <button class="btn primary" id="btn-asopt-add">添加 / 覆盖</button>
+<div id="fp-overlay" class="overlay" style="display:none">
+  <div class="filepicker">
+    <header class="topbar">
+      <button id="fp-close" class="icon-btn">‹ 取消</button>
+      <div class="topbar-title">
+        <h1 id="fp-title">选择文件</h1>
       </div>
-      <p class="hint">
-        提示：文件名与写法与上游 <code>/data/adb/naki/asopt.conf</code> <b>完全一致</b>，
-        可直接与官方模块共用。
-      </p>
+      <span></span>
+    </header>
+    <div class="fp-shortcuts" id="fp-shortcuts"></div>
+    <div class="fp-path" id="fp-path"></div>
+    <div class="fp-list" id="fp-list"></div>
+    <div class="fp-savebar" id="fp-savebar" style="display:none">
+      <input type="text" id="fp-filename" class="fp-filename-input" placeholder="文件名，如 threads_export.json">
+      <button id="fp-confirm" class="btn-primary">导出到此处</button>
     </div>
+  </div>
+</div>
 
-  </section>
-
-  <!-- ============ 自定义线程 ============ -->
-  <section id="pane-custom" class="pane">
-
-    <div id="custom-list">
-      <div class="card">
-        <h2>应用列表</h2>
-        <input id="search" class="input" type="search" placeholder="搜索包名，如 com.tencent.mm">
-        <div class="hint" id="list-meta">加载中…</div>
-        <div id="apps" class="apps"></div>
-        <div class="btns"><button class="btn" id="btn-more">显示更多</button></div>
-      </div>
-      <div class="card">
-        <h2>手动添加</h2>
-        <p class="hint">找不到想调的应用？直接输入包名即可（支持 * 通配符）。</p>
-        <label class="field"><span>包名</span>
-          <input id="f-newpkg" class="input" placeholder="com.example.app">
-        </label>
-        <div class="btns"><button class="btn" id="btn-openpkg">打开</button></div>
-      </div>
+<div id="dialog" class="dialog-overlay" style="display:none">
+  <div class="dialog-box" role="dialog" aria-modal="true">
+    <div id="dialog-message" class="dialog-message"></div>
+    <div class="dialog-actions">
+      <button id="dialog-cancel" class="btn-secondary" style="display:none">取消</button>
+      <button id="dialog-ok" class="btn-primary">确定</button>
     </div>
-
-    <div id="custom-detail" class="hidden">
-      <div class="card">
-        <div class="titlerow">
-          <button class="btn small" id="btn-back">← 返回</button>
-        </div>
-        <div class="pkg" id="d-pkg"></div>
-        <div id="d-rules" class="rules"></div>
-      </div>
-
-      <div class="card">
-        <h2>新增 / 覆盖规则</h2>
-        <label class="field"><span>线程名</span>
-          <input id="f-thread" class="input" placeholder="留空 = 进程兜底（整个进程）">
-        </label>
-        <div class="btns">
-          <button class="btn small" id="btn-mainthread">填入主线程名（后 15 位）</button>
-        </div>
-        <label class="field"><span>绑核</span>
-          <select id="f-core" class="input"></select>
-        </label>
-        <div class="btns">
-          <button class="btn primary" id="btn-save">保存规则</button>
-          <button class="btn danger" id="btn-reset-app">还原该应用内置</button>
-        </div>
-      </div>
-    </div>
-
-  </section>
-
-  <!-- ============ 备份 / 导入 ============ -->
-  <section id="pane-backup" class="pane">
-
-    <div class="card">
-      <h2>导出备份</h2>
-      <p class="hint">导出开关状态与全部自定义规则，保存到 /sdcard/Download。</p>
-      <div class="btns"><button class="btn primary" id="btn-export">导出到 Download</button></div>
-      <div id="export-out" class="hidden">
-        <div class="hint" id="export-path"></div>
-        <textarea id="export-text" class="input mono" rows="8" readonly></textarea>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>导入备份</h2>
-      <p class="hint">粘贴备份内容后导入，将覆盖当前的自定义规则与开关。</p>
-      <textarea id="import-text" class="input mono" rows="8"
-        placeholder="# Meizu_Thread backup v1&#10;[config]&#10;meizu=on&#10;…&#10;[rules]&#10;包名&#9;线程名&#9;核心"></textarea>
-      <div class="btns">
-        <button class="btn primary" id="btn-import">导入</button>
-        <button class="btn danger" id="btn-reset-all">清空全部自定义</button>
-      </div>
-    </div>
-
-  </section>
-
-</main>
+  </div>
+</div>
 
 <div id="toast" class="toast"></div>
-<div id="busy" class="busy hidden"><div class="spinner"></div><span id="busy-text">处理中…</span></div>
 
 <script src="app.js"></script>
 </body>

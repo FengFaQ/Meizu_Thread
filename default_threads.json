@@ -1,0 +1,2906 @@
+[
+  {
+    "friendly": "com.tencent.mm",
+    "packages": [
+      "com.tencent.mm"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "5-6": [
+          "default_matrix_",
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.tencent.mobileqq",
+    "packages": [
+      "com.tencent.mobileqq"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "MediaCodec_loop"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.tencent.tim",
+    "packages": [
+      "com.tencent.tim"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "HeapTaskDaemon"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "tw.nekomimi.nekogram",
+    "packages": [
+      "tw.nekomimi.nekogram"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "5-6": [
+          "files_database_",
+          "searchQueue"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "org.telegram.group",
+    "packages": [
+      "org.telegram.group"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "org.telegram.messenger",
+    "packages": [
+      "org.telegram.messenger"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "0-6",
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "nu.gpu.nagram",
+    "packages": [
+      "nu.gpu.nagram"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "xyz.nextalone.nagram",
+    "packages": [
+      "xyz.nextalone.nagram"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "stageQueue"
+        ],
+        "5-6": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.radolyn.ayugram",
+    "packages": [
+      "com.radolyn.ayugram"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "5-6": [
+          "SpoilerEffectBi"
+        ],
+        "2-6": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.alibaba.android.rimet",
+    "packages": [
+      "com.alibaba.android.rimet"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "5-6": [
+          "Doraemon-Proces"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.taobao.taobao",
+    "packages": [
+      "com.taobao.taobao"
+    ],
+    "cpuset": {
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "WeexJSBridgeTh"
+        ],
+        "5-6": [
+          "HeapTaskDaemon",
+          "8RYPVI8EZKhJUU"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.jingdong.app.mall",
+    "packages": [
+      "com.jingdong.app.mall"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "pool-15-thread-"
+        ],
+        "5-6": [
+          "RunnerWrapper_8",
+          "JDFileDownloade"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.xunmeng.pinduoduo",
+    "packages": [
+      "com.xunmeng.pinduoduo"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "5-6": [
+          "Chat#Single-Syn",
+          "Startup#RTDispa"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.taobao.idlefish",
+    "packages": [
+      "com.taobao.idlefish"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "5-6": [
+          "1.ui",
+          "1.raster"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.sankuai.meituan",
+    "packages": [
+      "com.sankuai.meituan"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "5-6": [
+          "TTE-keyAgreemen"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.eg.android.AlipayGphone",
+    "packages": [
+      "com.eg.android.AlipayGphone"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "5-6": [
+          "crv-worker-thre"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.sankuai.meituan.takeoutnew",
+    "packages": [
+      "com.sankuai.meituan.takeoutnew"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "5-6": [
+          "J"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "me.ele",
+    "packages": [
+      "me.ele"
+    ],
+    "cpuset": {
+      "main_thread": "5-6",
+      "other": "5-6",
+      "comm": {
+        "2-4": [
+          "dp2ndk",
+          "Xxdn-Worker"
+        ],
+        "2-6": [
+          "1.raster",
+          "2.raster"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "tv.danmaku.bili",
+    "packages": [
+      "tv.danmaku.bili"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "5-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "Thread",
+          "IJK_External_Re",
+          "MediaCodec_loop"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.bilibili.app.in",
+    "packages": [
+      "com.bilibili.app.in"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "Thread",
+          "IJK_External_Re",
+          "MediaCodec_loop"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.example.piliplus",
+    "packages": [
+      "com.example.piliplus"
+    ],
+    "cpuset": {
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "Thread-",
+          "MediaCodec_loop",
+          "demux",
+          "1.raster"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.yishu.ylxsp",
+    "packages": [
+      "com.yishu.ylxsp"
+    ],
+    "cpuset": {
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "MediaCodec_loop",
+          "1.raster"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.phoenix.read",
+    "packages": [
+      "com.phoenix.read"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "Thread"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "app.komikku.beta",
+    "packages": [
+      "app.komikku.beta"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "5-6": [
+          "AsyncTask"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "org.skepsun.kototoro",
+    "packages": [
+      "org.skepsun.kototoro"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "main_thread": "2-4",
+      "other": "2-6",
+      "comm": {
+        "5-6": [
+          "DefaultDispatch"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.bilingify.readest",
+    "packages": [
+      "com.bilingify.readest"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "5-6": [
+          "Chrome InProcGp"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.smile.gifmaker",
+    "packages": [
+      "com.smile.gifmaker"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "5-6",
+      "comm": {
+        "2-4": [
+          "smile.gifmaker",
+          "MediaCodec_"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.kuaishou.nebula",
+    "packages": [
+      "com.kuaishou.nebula"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "5-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "thread"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.qiyi.video",
+    "packages": [
+      "com.qiyi.video"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread;DanmakuGLThread",
+      "heaviest_cores": "2-4",
+      "main_thread": "2-4",
+      "other": "5-6",
+      "comm": {
+        "2-4": [
+          "PLAYER_INFLATE_",
+          "PumaPlyrVEgn"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.youku.phone",
+    "packages": [
+      "com.youku.phone"
+    ],
+    "cpuset": {
+      "main_thread": "5-6",
+      "other": "2-6",
+      "comm": {
+        "2-6": [
+          "NDK MediaCodec",
+          "Thread"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.ss.android.ugc.aweme",
+    "packages": [
+      "com.ss.android.ugc.aweme"
+    ],
+    "cpuset": {
+      "main_thread": "5-6",
+      "other": "5-6",
+      "comm": {
+        "2-4": [
+          "VDecod2-"
+        ],
+        "5-6": [
+          "HeapTaskDaemon",
+          "danmaku-driver",
+          "#pty-wqp-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.ss.android.ugc.aweme.lite",
+    "packages": [
+      "com.ss.android.ugc.aweme.lite"
+    ],
+    "cpuset": {
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "2-4": [
+          "VDecod2-"
+        ],
+        "5-6": [
+          "HeapTaskDaemon",
+          "danmaku-driver"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.ss.android.yumme.video",
+    "packages": [
+      "com.ss.android.yumme.video"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "MediaCodec_loop"
+        ],
+        "2-4": [
+          "TRThread"
+        ],
+        "5-6": [
+          "VDecod"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.mystyle.purelive",
+    "packages": [
+      "com.mystyle.purelive"
+    ],
+    "cpuset": {
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "1.raster"
+        ],
+        "5-6": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.magicalstory.videos",
+    "packages": [
+      "com.magicalstory.videos"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "5-6": [
+          "MediaCodec_loop"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.coolapk.market",
+    "packages": [
+      "com.coolapk.market"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "5-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "Thread-"
+        ],
+        "5-6": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "gov.pianzong.androidnga",
+    "packages": [
+      "gov.pianzong.androidnga"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "5-6": [
+          "Thread"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.sina.weibo",
+    "packages": [
+      "com.sina.weibo"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "5-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.max.xiaoheihe",
+    "packages": [
+      "com.max.xiaoheihe"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "5-6": [
+          "glide-animation"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.baidu.tieba",
+    "packages": [
+      "com.baidu.tieba"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "5-6",
+      "other": "5-6"
+    }
+  },
+  {
+    "friendly": "com.zhihu.android",
+    "packages": [
+      "com.zhihu.android"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "5-6",
+      "other": "5-6"
+    }
+  },
+  {
+    "friendly": "com.inspur.mobilefsp",
+    "packages": [
+      "com.inspur.mobilefsp"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "RenderThread"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.twitter.android",
+    "packages": [
+      "com.twitter.android"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "5-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "MediaCodec_loop"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.uu898.uuhavequality",
+    "packages": [
+      "com.uu898.uuhavequality"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "BR-LagTrace-Thr"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.google.android.youtube",
+    "packages": [
+      "com.google.android.youtube"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "5-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "ExoPlayer:Playb",
+          "MediaCodec_loop"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.facebook.katana",
+    "packages": [
+      "com.facebook.katana"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "5-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "ComponentLavout"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.discord",
+    "packages": [
+      "com.discord"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "5-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "pool-10-thread-"
+        ],
+        "5-6": [
+          "mqt_js"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.duolingo",
+    "packages": [
+      "com.duolingo"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "5-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.shizi.tool.p3",
+    "packages": [
+      "com.shizi.tool.p3"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "imore.wallpaper"
+        ],
+        "5-6": [
+          "glide-disk-cach"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.hjmore.wallpaper",
+    "packages": [
+      "com.hjmore.wallpaper"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "imore.wallpaper"
+        ],
+        "5-6": [
+          "HeapTaskDaemon"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.netease.cloudmusic",
+    "packages": [
+      "com.netease.cloudmusic"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "5-6",
+      "other": "5-6",
+      "comm": {
+        "5-6": [
+          "LooperTracer"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.kugou.android.lite",
+    "packages": [
+      "com.kugou.android.lite"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "5-6",
+      "other": "5-6"
+    }
+  },
+  {
+    "friendly": "cn.kuwo.player",
+    "packages": [
+      "cn.kuwo.player"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "5-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "dMessageHandler",
+          "cdn.kuwo.cn"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.luna.music",
+    "packages": [
+      "com.luna.music"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "other": "5-6"
+    }
+  },
+  {
+    "friendly": "com.salt.music",
+    "packages": [
+      "com.salt.music"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "5-6",
+      "other": "5-6"
+    }
+  },
+  {
+    "friendly": "com.ximalaya.ting.android",
+    "packages": [
+      "com.ximalaya.ting.android"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "5-6",
+      "other": "5-6"
+    }
+  },
+  {
+    "friendly": "com.apple.android.music",
+    "packages": [
+      "com.apple.android.music"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "other": "5-6"
+    }
+  },
+  {
+    "friendly": "com.xuzly.hy.lanerc.app",
+    "packages": [
+      "com.xuzly.hy.lanerc.app"
+    ],
+    "cpuset": {
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "Thread-"
+        ],
+        "5-6": [
+          "1.ui",
+          "mpv/demux",
+          "1.raster"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.qidian.QDReader",
+    "packages": [
+      "com.qidian.QDReader"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "other": "5-6"
+    }
+  },
+  {
+    "friendly": "com.dragon.read",
+    "packages": [
+      "com.dragon.read"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "5-6",
+      "other": "5-6",
+      "comm": {
+        "5-6": [
+          "HeapTaskDaemon"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.kmxs.reader",
+    "packages": [
+      "com.kmxs.reader"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "other": "5-6"
+    }
+  },
+  {
+    "friendly": "io.legado.app.release",
+    "packages": [
+      "io.legado.app.release"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "5-6": [
+          "binder"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.baidu.BaiduMap",
+    "packages": [
+      "com.baidu.BaiduMap"
+    ],
+    "cpuset": {
+      "main_thread": "5-6",
+      "other": "5-6",
+      "comm": {
+        "5-6": [
+          "31.1_0223536945",
+          ".31.1_062565145"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.fenbi.android.solar",
+    "packages": [
+      "com.fenbi.android.solar"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "5-6",
+      "other": "5-6",
+      "comm": {
+        "5-6": [
+          "VizWebView"
+        ],
+        "2-6": [
+          "Chrome_InProcGp"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.kuaiduizuoye.scan",
+    "packages": [
+      "com.kuaiduizuoye.scan"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "5-6": [
+          "Chrome_IOThread"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.xt.retouch",
+    "packages": [
+      "com.xt.retouch"
+    ],
+    "cpuset": {
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "Signal Catcher",
+          "perfetto_hprof_",
+          "Jit thread pool"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.larus.nova",
+    "packages": [
+      "com.larus.nova"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "MediaLoad"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.futuremark.dmandroid.application",
+    "packages": [
+      "com.futuremark.dmandroid.application"
+    ],
+    "cpuset": {
+      "other": "5-6",
+      "comm": {
+        "5-6": [
+          "Thread-??"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.android.chrome",
+    "packages": [
+      "com.android.chrome"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "5-6",
+      "other": "5-6"
+    }
+  },
+  {
+    "friendly": "com.microsoft.emmx",
+    "packages": [
+      "com.microsoft.emmx"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread;hwuiTask*",
+      "heaviest_cores": "2-6",
+      "main_thread": "5-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "Thread-",
+          "NetworkService"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.sfexpress.knight",
+    "packages": [
+      "com.sfexpress.knight"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "5-6": [
+          "binder"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.qihoo.contents",
+    "packages": [
+      "com.qihoo.contents"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "Thread-"
+        ],
+        "5-6": [
+          "VizWebView"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "mark.via",
+    "packages": [
+      "mark.via"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "5-6",
+      "other": "5-6"
+    }
+  },
+  {
+    "friendly": "com.deepseek.chat",
+    "packages": [
+      "com.deepseek.chat"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "5-6",
+      "other": "5-6"
+    }
+  },
+  {
+    "friendly": "com.MobileTicket",
+    "packages": [
+      "com.MobileTicket"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "5-6",
+      "other": "5-6"
+    }
+  },
+  {
+    "friendly": "com.hexin.plat.android",
+    "packages": [
+      "com.hexin.plat.android"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "2-4",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "Thread"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "org.breezyweather",
+    "packages": [
+      "org.breezyweather"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "5-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "Binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.xhey.xcamera",
+    "packages": [
+      "com.xhey.xcamera"
+    ],
+    "cpuset": {
+      "main_thread": "2-6",
+      "other": "2-6",
+      "comm": {
+        "2-4": [
+          "Algorithm-"
+        ],
+        "5-6": [
+          "RxCachedThreadS"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "cn.myflv.noactive",
+    "packages": [
+      "cn.myflv.noactive"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "5-6",
+      "other": "5-6"
+    }
+  },
+  {
+    "friendly": "com.tencent.qqmusic",
+    "packages": [
+      "com.tencent.qqmusic"
+    ],
+    "cpuset": {
+      "other": "0-1"
+    }
+  },
+  {
+    "friendly": "com.tencent.wetype",
+    "packages": [
+      "com.tencent.wetype"
+    ],
+    "cpuset": {
+      "other": "0-1"
+    }
+  },
+  {
+    "friendly": "com.kugou.android.support",
+    "packages": [
+      "com.kugou.android.support"
+    ],
+    "cpuset": {
+      "other": "0-1"
+    }
+  },
+  {
+    "friendly": "com.kugou.android.message",
+    "packages": [
+      "com.kugou.android.message"
+    ],
+    "cpuset": {
+      "other": "0-1"
+    }
+  },
+  {
+    "friendly": "com.ss.android.ugc.aweme.mobile",
+    "packages": [
+      "com.ss.android.ugc.aweme.mobile"
+    ],
+    "cpuset": {
+      "other": "0-1"
+    }
+  },
+  {
+    "friendly": "tv.danmaku.bilibilihd",
+    "packages": [
+      "tv.danmaku.bilibilihd"
+    ],
+    "cpuset": {
+      "other": "0-1"
+    }
+  },
+  {
+    "friendly": "com.android.launcher",
+    "packages": [
+      "com.android.launcher"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "binder"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.google.android.apps.nexuslauncher",
+    "packages": [
+      "com.google.android.apps.nexuslauncher"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "binder"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.android.launcher3",
+    "packages": [
+      "com.android.launcher3"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "binder"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.sec.android.app.launcher",
+    "packages": [
+      "com.sec.android.app.launcher"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "2-6": [
+          "binder"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.miui.home",
+    "packages": [
+      "com.miui.home"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-6",
+      "main_thread": "2-6",
+      "other": "5-6",
+      "comm": {
+        "5-6": [
+          "binder"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.systemui",
+    "packages": [
+      "com.meizu.systemui"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ],
+        "2-4": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.flyme.launcher",
+    "packages": [
+      "com.meizu.flyme.launcher"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "2-4": [
+          "flyme.launcher",
+          "Thread-"
+        ],
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.customizecenter",
+    "packages": [
+      "com.meizu.customizecenter"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ],
+        "2-4": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.net.nativelockscreen",
+    "packages": [
+      "com.meizu.net.nativelockscreen"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ],
+        "2-4": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.setup",
+    "packages": [
+      "com.meizu.setup"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ],
+        "2-4": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.suggestion",
+    "packages": [
+      "com.meizu.suggestion"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ],
+        "2-4": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.picker",
+    "packages": [
+      "com.meizu.picker"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ],
+        "2-4": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.assistant",
+    "packages": [
+      "com.meizu.assistant"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ],
+        "2-4": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.flymelab",
+    "packages": [
+      "com.meizu.flymelab"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ],
+        "2-4": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.flyme.easylauncher",
+    "packages": [
+      "com.meizu.flyme.easylauncher"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ],
+        "2-4": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.flyme.systemuiex",
+    "packages": [
+      "com.flyme.systemuiex"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ],
+        "2-4": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.flyme.systemuitools",
+    "packages": [
+      "com.flyme.systemuitools"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ],
+        "2-4": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.flyme.systemuieditor",
+    "packages": [
+      "com.flyme.systemuieditor"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ],
+        "2-4": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.flyme.alivewallpaper",
+    "packages": [
+      "com.flyme.alivewallpaper"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ],
+        "2-4": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.flyme.linkpc",
+    "packages": [
+      "com.flyme.linkpc"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ],
+        "2-4": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.flyme.ability",
+    "packages": [
+      "com.flyme.ability"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ],
+        "2-4": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.flyme.linkUnion",
+    "packages": [
+      "com.flyme.linkUnion"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ],
+        "2-4": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.flyme.auto.launcherflow",
+    "packages": [
+      "com.flyme.auto.launcherflow"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ],
+        "2-4": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.flyme.auto.notificationflow",
+    "packages": [
+      "com.flyme.auto.notificationflow"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ],
+        "2-4": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.media.camera",
+    "packages": [
+      "com.meizu.media.camera"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "2-4": [
+          "Thread-",
+          "Thread",
+          "MediaCodec_",
+          "VDecod2-"
+        ],
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.media.video",
+    "packages": [
+      "com.meizu.media.video"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "2-4": [
+          "MediaCodec_",
+          "VDecod2_",
+          "Thread-"
+        ],
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.media.music",
+    "packages": [
+      "com.meizu.media.music"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "2-4": [
+          "MediaCodec_",
+          "Thread-"
+        ],
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.media.gallery",
+    "packages": [
+      "com.meizu.media.gallery"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ],
+        "2-4": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.media.imageservice",
+    "packages": [
+      "com.meizu.media.imageservice"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ],
+        "2-4": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.flyme.videoclips",
+    "packages": [
+      "com.flyme.videoclips"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "2-4": [
+          "MediaCodec_",
+          "Thread-"
+        ],
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.flyme.scanner",
+    "packages": [
+      "com.flyme.scanner"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ],
+        "2-4": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.media.reader",
+    "packages": [
+      "com.meizu.media.reader"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "2-4": [
+          "NetworkService",
+          "Thread-"
+        ],
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.media.ebook",
+    "packages": [
+      "com.meizu.media.ebook"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ],
+        "2-4": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.media.life",
+    "packages": [
+      "com.meizu.media.life"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ],
+        "2-4": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.flyme.weather",
+    "packages": [
+      "com.meizu.flyme.weather"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ],
+        "2-4": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.net.map",
+    "packages": [
+      "com.meizu.net.map"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ],
+        "2-4": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.net.search",
+    "packages": [
+      "com.meizu.net.search"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ],
+        "2-4": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.net.pedometer",
+    "packages": [
+      "com.meizu.net.pedometer"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ],
+        "2-4": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.netcontactservice",
+    "packages": [
+      "com.meizu.netcontactservice"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ],
+        "2-4": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.callsetting",
+    "packages": [
+      "com.meizu.callsetting"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.flyme.callagent",
+    "packages": [
+      "com.flyme.callagent"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.mstore",
+    "packages": [
+      "com.meizu.mstore"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "2-4": [
+          "NetworkService",
+          "Thread-"
+        ],
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.flyme.gamecenter",
+    "packages": [
+      "com.meizu.flyme.gamecenter"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "2-4": [
+          "NetworkService",
+          "Thread-"
+        ],
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.gamecenter.service",
+    "packages": [
+      "com.meizu.gamecenter.service"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ],
+        "2-4": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.flyme.dsgame",
+    "packages": [
+      "com.meizu.flyme.dsgame"
+    ],
+    "cpuset": {
+      "heaviest_thread": "RenderThread",
+      "heaviest_cores": "2-4",
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ],
+        "2-4": [
+          "Thread-"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.filemanager",
+    "packages": [
+      "com.meizu.filemanager"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.datamigration",
+    "packages": [
+      "com.meizu.datamigration"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.flyme.update",
+    "packages": [
+      "com.meizu.flyme.update"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.flyme.calculator",
+    "packages": [
+      "com.meizu.flyme.calculator"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.notepaper",
+    "packages": [
+      "com.meizu.notepaper"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.voiceassistant",
+    "packages": [
+      "com.meizu.voiceassistant"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.flyme.voiceinteract",
+    "packages": [
+      "com.flyme.voiceinteract"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.flyme.wallet",
+    "packages": [
+      "com.meizu.flyme.wallet"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.account.pay",
+    "packages": [
+      "com.meizu.account.pay"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.mznfcpay",
+    "packages": [
+      "com.meizu.mznfcpay"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.flyme.smartcard",
+    "packages": [
+      "com.flyme.smartcard"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.flyme.safebox",
+    "packages": [
+      "com.flyme.safebox"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.powersave",
+    "packages": [
+      "com.meizu.powersave"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.flyme.service.find",
+    "packages": [
+      "com.meizu.flyme.service.find"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.mzsyncservice",
+    "packages": [
+      "com.meizu.mzsyncservice"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.cloud",
+    "packages": [
+      "com.meizu.cloud"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.account",
+    "packages": [
+      "com.meizu.account"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.feedback",
+    "packages": [
+      "com.meizu.feedback"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.mcare",
+    "packages": [
+      "com.meizu.mcare"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.compaign",
+    "packages": [
+      "com.meizu.compaign"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.flyme.directservice",
+    "packages": [
+      "com.meizu.flyme.directservice"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.pps",
+    "packages": [
+      "com.meizu.pps"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.ems",
+    "packages": [
+      "com.meizu.ems"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.regservice",
+    "packages": [
+      "com.meizu.regservice"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.perfui",
+    "packages": [
+      "com.meizu.perfui"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.flyme.toolbox",
+    "packages": [
+      "com.meizu.flyme.toolbox"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.connectivitysettings",
+    "packages": [
+      "com.meizu.connectivitysettings"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.earphone",
+    "packages": [
+      "com.meizu.earphone"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.battery",
+    "packages": [
+      "com.meizu.battery"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.privacy",
+    "packages": [
+      "com.meizu.privacy"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.location",
+    "packages": [
+      "com.meizu.location"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.mzbasestationsafe",
+    "packages": [
+      "com.meizu.mzbasestationsafe"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.share",
+    "packages": [
+      "com.meizu.share"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.logreport",
+    "packages": [
+      "com.meizu.logreport"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.smarthome",
+    "packages": [
+      "com.meizu.smarthome"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.alphame",
+    "packages": [
+      "com.meizu.alphame"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.dataservice",
+    "packages": [
+      "com.meizu.dataservice"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.remotecooperation",
+    "packages": [
+      "com.meizu.remotecooperation"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.telephonyengineermode",
+    "packages": [
+      "com.meizu.telephonyengineermode"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.commdiagnostic",
+    "packages": [
+      "com.meizu.commdiagnostic"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.superalgorithmservice",
+    "packages": [
+      "com.meizu.superalgorithmservice"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.meizu.meizuiot",
+    "packages": [
+      "com.meizu.meizuiot"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.flyme.secureservice",
+    "packages": [
+      "com.flyme.secureservice"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.flyme.agentruntime",
+    "packages": [
+      "com.flyme.agentruntime"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.flyme.aicymanager",
+    "packages": [
+      "com.flyme.aicymanager"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.flyme.ai.taskagent",
+    "packages": [
+      "com.flyme.ai.taskagent"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.flyme.virtualdevice",
+    "packages": [
+      "com.flyme.virtualdevice"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.flyme.telecom.usagedata.service",
+    "packages": [
+      "com.flyme.telecom.usagedata.service"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  },
+  {
+    "friendly": "com.flyme.dck.service",
+    "packages": [
+      "com.flyme.dck.service"
+    ],
+    "cpuset": {
+      "other": "0-4",
+      "comm": {
+        "0-1": [
+          "binder:"
+        ]
+      }
+    }
+  }
+]

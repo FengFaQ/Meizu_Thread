@@ -1,7 +1,7 @@
 id=Meizu_Thread
-name=魅族线程 (Meizu Thread)
-version=2.0
-versionCode=200
+name=魅族线程
+version=3.0
+versionCode=300
 author=FengFaQ
-description=魅族线程 8G3 魅族:On Asoul:On
+description=魅族线程 · 用户线程(Scene 编辑器) + 游戏线程(AsoulOpt)
 updateJson=https://raw.githubusercontent.com/FengFaQ/Meizu_Thread/main/update.json

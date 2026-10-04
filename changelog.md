@@ -1,5 +1,51 @@
 # 更新日志
 
+## 3.0
+
+**架构变更：不再自带线程引擎。**
+「用户线程」交给 **Scene**，游戏线程交给 **捆绑的 AsoulOpt**。
+
+### 用户线程（Scene）
+- WebUI 基于 **Scene 的「自定义线程编辑器」**（酷安@gyimo，n1.5）改造，完整保留其编辑体验
+  （标签式线程名、核心选择器、拖拽排序、JSON 导入导出、文件选择器、主题/模糊/背景图…）
+- 编辑对象：`/data/user/0/com.omarea.vtools/files/threads.json`，**由 Scene 读取生效**
+- **预置默认配置**（`default_threads.json`）：由本模块原「彗星应用线程 + 魅族线程」
+  （去掉游戏段，639 条）转换而来，共 **179 条规则 / 179 个包**
+  - Scene 首次没有配置时，WebUI 会**自动载入**这份默认（只进编辑器，点保存才写入 Scene）
+  - 也可随时用「载入默认」重新载入
+- 转换采用 Scene 的 **`cpuset` 模型**（**无损**）：
+  - 渲染类线程 → `heaviest_thread` + `heaviest_cores`
+  - 主线程 → `main_thread`
+  - 进程兜底 → `other`
+  - 其余线程级规则（`binder:*`、`Thread-*`、`MediaCodec_*` 等）→ **`comm`**（核心 → 线程名前缀）
+  - 对比：若用轻量的 `app_cpuset`（只有 main/render/other 三槽），
+    639 条里有 **213 条**核心与 other 不一致 → **33% 真实信息损失**；
+    用 `cpuset` 模型可 **0 损失**（仅 13 条前导通配如 `*Thread` 无法用「前缀」表达）
+- 符号名按魅族21（8Gen3 / 2+3+2+1）展开为具体核心：
+  `e-core=0-1`、`p-core=2-4`、`hp-core=5-6`、`all-core=0-7`
+  （依据：底座原文 `2-6→p-core,hp-core`、`5-6→hp-core`、`2-4→p-core`、`0-1→e-core`
+  四条在此映射下**全部精确成立**）
+- **移除了游戏线程（cpuset 的「游戏」用法）的钉核编辑** —— 游戏不再由此处绑核
+
+### 游戏线程（AsoulOpt，捆绑）
+- 捆绑上游 **nakixii/Magisk_AsoulOpt**（版本 Kana），
+  **其逻辑一字未改**：`asoulopt/AsoulOpt` 二进制与 `asoulopt/service.sh`
+  与上游**逐字节一致**（已在自检中机械校验）
+- 仅把它的**安装位置**由 `/data/adb/modules/asoul_affinity_opt` 移到本模块的
+  `asoulopt/` 子目录；配置文件路径仍为上游定义的 `/data/adb/naki/asopt.conf`
+- WebUI「游戏线程」页保留对 **AsoulOpt 配置的可视化编辑**：
+  - 全局 `mode`（0 硬亲和 / 1 软迁移 / 2 硬迁移）与 `rt`（0 调度器默认 / 1 实时）
+  - **每游戏单独覆盖**（增 / 改 / 删），配置文件格式与上游**完全一致**（含同样的说明注释）
+  - 自动列出**已安装且受支持**的游戏（按上游 README 关键词匹配），并标注是「单独」还是「跟随全局」
+- `customize.sh` 会在缺失时生成与上游格式一致的默认 `asopt.conf`（已存在则绝不覆盖）
+
+### 撤销 / 移除
+- 移除自带引擎相关文件：`bin/`、`AppOpt`、`applist.conf`(不入包)、`confige.txt`、
+  `custom_rules.tsv`、`action.sh`、`check.sh`
+- 保留规则源文件（`base/`、`meizu_rules.conf`、`asoulopt_rules.conf`）与 `applist.conf`
+  作为 `default_threads.json` 的**转换来源**，不入包
+- v2.0（引擎版）已打 tag **`v2.0`**，随时可回到该版本
+
 ## 2.0
 
 **本次重点：真正可用的图形化 WebUI。**
