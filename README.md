@@ -106,6 +106,43 @@
 > 包名超过 15 字符时，主线程规则须写包名的**后 15 位**
 > （如 `com.meizu.flyme.launcher` → `.flyme.launcher`）。
 
+## 验证运行状态
+
+模块内置自检脚本，在设备上以 **root** 运行：
+
+```sh
+# 总览 + 自动抽样（挑最多 3 个正在运行且带规则的应用）
+su -c sh /data/adb/modules/Meizu_Thread/check.sh
+
+# 详查某个应用（逐线程列出实际绑核与期望值）
+su -c sh /data/adb/modules/Meizu_Thread/check.sh com.tencent.mm
+```
+
+它会依次检查：
+
+| 节 | 检查内容 | 通过标准 |
+|---|---|---|
+| 1 | 权限、模块文件、规则数 | AppOpt 可执行、applist.conf 存在 |
+| 2 | AppOpt 进程 | **运行中** |
+| 3 | 日志中的规则丢弃告警 | 「无效 CPU 范围」「无有效 CPU」均为 **0** |
+| 4 | 拓扑探测与符号展开 | 与机型预期一致（魅族 21 为 `2+3+2+1`） |
+| 5 | cpuset 目录结构与任务数 | 能列出各 CPU 组合目录 |
+| 6 | **实测线程绑核** | 「异常」为 0 |
+
+第 6 节是**决定性的**：线程绑核的唯一事实是
+`/proc/<tid>/status` 的 `Cpus_allowed_list`，脚本把它与该线程按
+`applist.conf` 应得的规则做对照，并附带 `/proc/<tid>/cpuset`
+来判断**是谁在约束它**：
+
+| 现象 | 含义 |
+|---|---|
+| 实际 = 期望 | ✅ 正常 |
+| 实际 ≠ 期望，`cpuset=/AkiAppOpt/...` | 引擎生效但结果不符，请反馈 |
+| 实际 ≠ 期望，`cpuset=/top-app` 等 | 被 Android 自身 cpuset 覆盖 |
+| 实际 = 全部核心 | 规则未匹配到该线程 |
+
+> 脚本也可在 PC 上验证自身逻辑：`sh check.sh --selftest`（22 项）。
+
 ## 命令行（可选）
 
 WebUI 的全部功能也可直接调用：

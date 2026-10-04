@@ -34,6 +34,7 @@ INCLUDE_FILES = [
     "asoulopt_rules.conf",
     "action.sh",
     "webui.sh",
+    "check.sh",
     "customize.sh",
     "service.sh",
     "致谢名单.md",
