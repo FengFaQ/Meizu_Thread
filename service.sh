@@ -1,5 +1,24 @@
 #!/system/bin/sh
 
+MODDIR="${0%/*}"
+PID_FILE="$MODDIR/AppOpt.pid"
+CONFIG_FILE="$MODDIR/confige.txt"
+
+# 引擎参数（AkiAppOpt 的 -s / -b），由 WebUI 写入 confige.txt
+#   -s <interval>  扫描间隔秒数 ≥1，原生默认 2
+#   -b <cpuset_name>  cpuset 目录名，原生默认 AkiAppOpt
+get_cfg() {
+    [ -f "$CONFIG_FILE" ] || return 0
+    grep -E "^$1=" "$CONFIG_FILE" 2>/dev/null | head -n1 | cut -d= -f2- | tr -d '\r\n'
+}
+
+INTERVAL="$(get_cfg interval)"
+case "$INTERVAL" in ''|*[!0-9]*) INTERVAL=2 ;; esac
+[ "$INTERVAL" -ge 1 ] 2>/dev/null || INTERVAL=2
+
+CPUSET="$(get_cfg cpuset_name)"
+case "$CPUSET" in ''|*[!A-Za-z0-9_.-]*) CPUSET=AkiAppOpt ;; esac
+
 wait_sys_boot_completed() {
     local retries=9
     until [ "$(getprop sys.boot_completed)" = "1" ] || [ "$retries" -le 0 ]; do
@@ -9,9 +28,6 @@ wait_sys_boot_completed() {
 }
 
 wait_sys_boot_completed
-
-MODDIR="${0%/*}"
-PID_FILE="$MODDIR/AppOpt.pid"
 
 [ -x "$MODDIR/AppOpt" ] || exit 1
 
@@ -27,7 +43,7 @@ if [ -f "$PID_FILE" ]; then
 fi
 
 if [ "$APP_OPT_RUNNING" != "1" ]; then
-    nohup "$MODDIR/AppOpt" -c "$MODDIR/applist.conf" -b AkiAppOpt >/dev/null 2>&1 &
+    nohup "$MODDIR/AppOpt" -c "$MODDIR/applist.conf" -s "$INTERVAL" -b "$CPUSET" >/dev/null 2>&1 &
     echo $! > "$PID_FILE"
 fi
 

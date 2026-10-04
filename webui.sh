@@ -47,6 +47,12 @@ SRC_MEIZU="$MODDIR/meizu_rules.conf"
 SRC_ASOUL="$MODDIR/asoulopt_rules.conf"
 MODPROP="$MODDIR/module.prop"
 
+# 上游 AsoulOpt 模块的官方配置位置（由 nakixii 的 customize.sh 定义）
+# 允许用环境变量覆盖，便于在 PC 上测试
+ASOPT_DIR="${MEIZU_ASOPT_DIR:-/data/adb/naki}"
+ASOPT_CONF="$ASOPT_DIR/asopt.conf"
+ASOPT_MOD="${MEIZU_ASOPT_MOD:-/data/adb/modules/asoul_affinity_opt}"
+
 RAW_BASE="https://raw.githubusercontent.com/FengFaQ/Meizu_Thread/main"
 BACKUP_DIR="/sdcard/Download"
 
@@ -388,7 +394,7 @@ do_status() {
     fi
 
     cat <<EOF
-{"ok":true,"version":"$(printf '%s' "$ver" | json_str)","versionCode":"$(printf '%s' "$vcode" | json_str)","meizu":"$meizu","asoul":"$asoul","g83":"$g83","base":"$(base_name)","soc_model":"$(printf '%s' "$model" | json_str)","soc_platform":"$(printf '%s' "$plat" | json_str)","running":$running,"rules":{"total":$total,"base":$nbase,"meizu":$nmeizu,"asoul":$nasoul,"custom":$ncustom},"topology":{"e_core":"$(compact_cpus "$ec")","p_core":"$(compact_cpus "$pc")","hp_core":"$(compact_cpus "$hc")","all_core":"$(compact_cpus "$ac")"},"moddir":"$MODDIR"}
+{"ok":true,"version":"$(printf '%s' "$ver" | json_str)","versionCode":"$(printf '%s' "$vcode" | json_str)","meizu":"$meizu","asoul":"$asoul","g83":"$g83","base":"$(base_name)","soc_model":"$(printf '%s' "$model" | json_str)","soc_platform":"$(printf '%s' "$plat" | json_str)","running":$running,"interval":$(engine_interval),"cpuset":"$(printf '%s' "$(engine_cpuset)" | json_str)","rules":{"total":$total,"base":$nbase,"meizu":$nmeizu,"asoul":$nasoul,"custom":$ncustom},"topology":{"e_core":"$(compact_cpus "$ec")","p_core":"$(compact_cpus "$pc")","hp_core":"$(compact_cpus "$hc")","all_core":"$(compact_cpus "$ac")"},"moddir":"$MODDIR"}
 EOF
 }
 
@@ -793,6 +799,207 @@ do_import() {
 }
 
 # ---------------------------------------------------------------
+# AkiAppOpt 引擎参数
+#   二进制 getopt 串为 "c:s:b:hv"，即：
+#     -c <config_file>   规则文件         默认 ./applist.conf
+#     -s <interval>      扫描间隔秒数 ≥1  默认 2      ← 上游可调，本项目原先未使用
+#     -b <cpuset_name>   cpuset 目录名    默认 AkiAppOpt
+#   本项目把 -s / -b 存进 confige.txt，由 service.sh 启动时读取。
+# ---------------------------------------------------------------
+ENGINE_DEF_INTERVAL=2
+ENGINE_DEF_CPUSET=AkiAppOpt
+
+appopt_running() {
+    local p
+    if [ -f "$PIDFILE" ]; then
+        p="$(cat "$PIDFILE" 2>/dev/null | tr -d ' \r\n')"
+        if [ -n "$p" ] && kill -0 "$p" 2>/dev/null; then echo 1; return 0; fi
+    fi
+    echo 0
+}
+
+engine_interval() {
+    local v
+    v="$(cfg_get interval)"
+    case "$v" in ''|*[!0-9]*) v="$ENGINE_DEF_INTERVAL" ;; esac
+    [ "$v" -ge 1 ] 2>/dev/null || v="$ENGINE_DEF_INTERVAL"
+    printf '%s' "$v"
+}
+
+engine_cpuset() {
+    local v
+    v="$(cfg_get cpuset_name)"
+    case "$v" in ''|*[!A-Za-z0-9_.-]*) v="$ENGINE_DEF_CPUSET" ;; esac
+    printf '%s' "$v"
+}
+
+do_engine_get() {
+    printf '{"ok":true,"interval":%s,"cpuset":"%s","def_interval":%s,"def_cpuset":"%s","running":%s}\n' \
+        "$(engine_interval)" \
+        "$(printf '%s' "$(engine_cpuset)" | json_str)" \
+        "$ENGINE_DEF_INTERVAL" "$ENGINE_DEF_CPUSET" "$(appopt_running)"
+}
+
+do_engine_set() {
+    local iv="$1" cs="$2"
+    case "$iv" in ''|*[!0-9]*) result 0 "扫描间隔必须是正整数（秒）" ;; esac
+    [ "$iv" -ge 1 ] && [ "$iv" -le 3600 ] || result 0 "扫描间隔需在 1–3600 秒之间"
+    [ -n "$cs" ] || result 0 "cpuset 名不能为空"
+    case "$cs" in *[!A-Za-z0-9_.-]*) result 0 "cpuset 名只能含字母、数字与 _ . -" ;; esac
+    [ "${#cs}" -le 32 ] || result 0 "cpuset 名过长（≤32 字符）"
+
+    cfg_set interval "$iv"
+    cfg_set cpuset_name "$cs"
+
+    if restart_appopt; then
+        result 1 "已保存并重启引擎：-s $iv -b $cs"
+    else
+        result 1 "已保存：-s $iv -b $cs（引擎未重启，重启设备后生效）"
+    fi
+}
+
+# 按当前参数重启 AppOpt 使新参数生效
+restart_appopt() {
+    local iv cs
+    iv="$(engine_interval)"; cs="$(engine_cpuset)"
+    [ -x "$MODDIR/AppOpt" ] || return 1
+
+    if [ -f "$PIDFILE" ]; then
+        kill "$(cat "$PIDFILE" 2>/dev/null)" 2>/dev/null
+    fi
+    have pkill && pkill -f "$MODDIR/AppOpt" 2>/dev/null
+    sleep 1
+
+    if have setsid; then
+        setsid "$MODDIR/AppOpt" -c "$APPLIST" -s "$iv" -b "$cs" >/dev/null 2>&1 &
+    else
+        nohup "$MODDIR/AppOpt" -c "$APPLIST" -s "$iv" -b "$cs" >/dev/null 2>&1 &
+    fi
+    echo $! > "$PIDFILE" 2>/dev/null
+    sleep 1
+    [ "$(appopt_running)" = "1" ]
+}
+
+# ---------------------------------------------------------------
+# AsoulOpt（上游 nakixii 模块）配置
+#   官方路径：/data/adb/naki/asopt.conf
+#   格式（由上游 customize.sh 定义）：
+#       mode=<0|1|2>      0 硬亲和 / 1 软迁移 / 2 硬迁移
+#       rt=<0|1>          0 调度器默认 / 1 实时模式
+#       <包名> <mode> <rt>  每游戏覆盖，一行一个
+# ---------------------------------------------------------------
+asopt_installed() { [ -d "$ASOPT_MOD" ]; }
+
+asopt_header() {
+    cat <<'ASOPTEOF'
+# mode：运行模式 / Operation Mode
+# 0：硬亲和，理论上表现更好 / Affinity, performs better in theory
+# 1：软迁移，帧率可能更稳定 / Soft migrate, fps maybe more stable
+# 2：硬迁移，帧率可能更稳定 / Hard migrate, fps maybe more stable
+
+# rt：实时模式 / Real-Time Mode
+# 0：调度器默认行为 / Scheduler default behavior
+# 1：可能更流畅，但可能导致卡死 / maybe smoother, but may cause freeze
+
+# 可对游戏单独指定 mode 和 rt / Per-game override of mode and rt
+# 格式 / Format：包名(package name) mode rt
+# 例 / Example：com.miHoYo.Yuanshen 0 0
+# 一行一个，未匹配的游戏使用上面的全局值
+# One per line, global values above as fallback
+
+# ***保存后即时应用，切换游戏后生效***
+# ***Applied on save, effective on next app switch***
+ASOPTEOF
+}
+
+# 仅输出每游戏覆盖行：包名 mode rt
+asopt_games() {
+    [ -f "$ASOPT_CONF" ] || return 0
+    awk '
+        /^[[:space:]]*#/ { next }
+        /^[[:space:]]*$/ { next }
+        /^[[:space:]]*mode[[:space:]]*=/ { next }
+        /^[[:space:]]*rt[[:space:]]*=/ { next }
+        NF >= 3 {
+            p = $1; m = $2; r = $3
+            if (p == "" ) next
+            if (m !~ /^[0-9]+$/ || r !~ /^[0-9]+$/) next
+            print p " " m " " r
+        }
+    ' "$ASOPT_CONF"
+}
+
+asopt_cur() {   # $1 = mode|rt
+    local v=""
+    if [ -f "$ASOPT_CONF" ]; then
+        v="$(grep -E "^[[:space:]]*$1=" "$ASOPT_CONF" 2>/dev/null | head -n1 | cut -d= -f2 | tr -d ' \r\n')"
+    fi
+    case "$1" in
+        mode) case "$v" in 0|1|2) ;; *) v=0 ;; esac ;;
+        rt)   case "$v" in 0|1) ;; *) v=0 ;; esac ;;
+    esac
+    printf '%s' "$v"
+}
+
+asopt_write() {
+    local mode="$1" rt="$2" games="$3"
+    mkdir -p "$ASOPT_DIR" 2>/dev/null
+    {
+        asopt_header
+        printf '\n'
+        printf 'mode=%s\n' "$mode"
+        printf 'rt=%s\n' "$rt"
+        if [ -n "$games" ]; then printf '%s\n' "$games"; fi
+    } > "$ASOPT_CONF"
+}
+
+do_asopt_get() {
+    local inst=0
+    asopt_installed && inst=1
+    if [ ! -f "$ASOPT_CONF" ] && [ "$inst" = "0" ]; then
+        printf '{"ok":true,"installed":0,"path":"%s","mode":0,"rt":0,"games":[]}\n' \
+            "$(printf '%s' "$ASOPT_CONF" | json_str)"
+        return 0
+    fi
+    printf '{"ok":true,"installed":%s,"path":"%s","mode":%s,"rt":%s,"games":[' \
+        "$inst" "$(printf '%s' "$ASOPT_CONF" | json_str)" "$(asopt_cur mode)" "$(asopt_cur rt)"
+    asopt_games | awk '{ printf "%s{\"pkg\":\"%s\",\"mode\":%s,\"rt\":%s}", (NR>1?",":""), $1, $2, $3 }'
+    printf ']}\n'
+}
+
+do_asopt_set() {
+    local mode="$1" rt="$2"
+    case "$mode" in 0|1|2) ;; *) result 0 "mode 只能是 0 / 1 / 2" ;; esac
+    case "$rt" in 0|1) ;; *) result 0 "rt 只能是 0 / 1" ;; esac
+    asopt_write "$mode" "$rt" "$(asopt_games)"
+    result 1 "AsoulOpt 全局配置已保存：mode=$mode rt=$rt"
+}
+
+do_asopt_set_game() {
+    local pkg="$1" m="$2" r="$3" mode rt
+    [ -n "$pkg" ] || result 0 "包名不能为空"
+    case "$pkg" in *[[:space:]]*|*"#"*|*"="*) result 0 "包名不能含空格、# 或 =" ;; esac
+    case "$m" in 0|1|2) ;; *) result 0 "mode 只能是 0 / 1 / 2" ;; esac
+    case "$r" in 0|1) ;; *) result 0 "rt 只能是 0 / 1" ;; esac
+
+    mode="$(asopt_cur mode)"; rt="$(asopt_cur rt)"
+    asopt_games | awk -v p="$pkg" '$1 != p' > "$TMP/games.new"
+    printf '%s %s %s\n' "$pkg" "$m" "$r" >> "$TMP/games.new"
+    asopt_write "$mode" "$rt" "$(cat "$TMP/games.new")"
+    result 1 "已设置「$pkg」：mode=$m rt=$r"
+}
+
+do_asopt_del_game() {
+    local pkg="$1" mode rt
+    [ -n "$pkg" ] || result 0 "包名不能为空"
+    [ -s "$ASOPT_CONF" ] || result 0 "尚无 AsoulOpt 配置"
+    mode="$(asopt_cur mode)"; rt="$(asopt_cur rt)"
+    asopt_games | awk -v p="$pkg" '$1 != p' > "$TMP/games.new"
+    asopt_write "$mode" "$rt" "$(cat "$TMP/games.new")"
+    result 1 "已移除「$pkg」的单独配置"
+}
+
+# ---------------------------------------------------------------
 # report：人类可读摘要（供 action.sh / 终端使用，不联网）
 # ---------------------------------------------------------------
 do_report() {
@@ -815,6 +1022,17 @@ do_report() {
     echo "   AsoulOpt : $as"
     echo "   规则总数: $total"
     echo "   自定义  : $ncustom 条"
+    echo "-------------------------------------"
+    echo "⚙️  引擎参数（AkiAppOpt）"
+    printf '   扫描间隔: %s 秒  (-s，原生默认 2)\n' "$(engine_interval)"
+    printf '   cpuset  : %s     (-b，原生默认 AkiAppOpt)\n' "$(engine_cpuset)"
+    if [ -f "$ASOPT_CONF" ]; then
+        local asn
+        asn="$(asopt_games | grep -c . 2>/dev/null)"
+        [ -n "$asn" ] || asn=0
+        printf '   AsoulOpt: mode=%s rt=%s（另有 %s 个游戏单独配置）\n' \
+            "$(asopt_cur mode)" "$(asopt_cur rt)" "$asn"
+    fi
     echo "-------------------------------------"
 
     top="$(topology 2>/dev/null)" || top=""
@@ -848,6 +1066,12 @@ case "$CMD" in
         ;;
     update-rules) do_update_rules ;;
     report)       do_report ;;
+    engine-get)   do_engine_get ;;
+    engine-set)   do_engine_set "$1" "$2" ;;
+    asopt-get)    do_asopt_get ;;
+    asopt-set)    do_asopt_set "$1" "$2" ;;
+    asopt-set-game)  do_asopt_set_game "$1" "$2" "$3" ;;
+    asopt-del-game)  do_asopt_del_game "$1" ;;
     apps)         do_apps ;;
     app)          do_app "$1" ;;
     set-rule)     do_set_rule "$1" "$2" "$3" ;;

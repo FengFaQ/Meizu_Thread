@@ -409,4 +409,40 @@ select.input { appearance: none; }
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
+/* ---------- 分段选择（mode / rt） ---------- */
+.seg {
+  display: flex;
+  gap: 6px;
+  margin-top: 2px;
+}
+.seg button {
+  flex: 1;
+  padding: 10px 4px;
+  font-size: 12.5px;
+  color: var(--dim);
+  background: var(--card2);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: .15s;
+  font-family: inherit;
+}
+.seg button.on {
+  color: #fff;
+  background: var(--accent2);
+  border-color: var(--accent);
+  font-weight: 600;
+}
+.seg button:active { transform: scale(.98); }
+
+/* ---------- 行内代码 ---------- */
+code {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 11.5px;
+  background: #232a36;
+  padding: 1px 5px;
+  border-radius: 5px;
+  color: #9dc0f5;
+}
+
 .hidden { display: none !important; }

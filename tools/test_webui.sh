@@ -27,6 +27,11 @@ for f in App_8G3.txt App_common.txt; do
     [ -f "$ROOT/base/$f" ] && cp "$ROOT/base/$f" "$WORK/base/$f"
 done
 
+# 让 AsoulOpt 相关路径落在临时目录内（默认是设备上的 /data/adb/naki）
+MEIZU_ASOPT_DIR="$WORK/asoptdata"
+MEIZU_ASOPT_MOD="$WORK/asoptmod"
+export MEIZU_ASOPT_DIR MEIZU_ASOPT_MOD
+
 cd "$WORK" || exit 1
 
 # 计数工具
@@ -118,6 +123,56 @@ sh webui.sh reset-all > /dev/null 2>&1
 sh webui.sh apply > /dev/null 2>&1
 ok "规则数回到基线" "$(rules)" "$BASE_N"
 ok "重复选择器" "$(dups)" "0"
+
+printf '\n=== 12. 引擎参数（AkiAppOpt -s / -b）===\n'
+AJSON=$(sh webui.sh engine-get 2>&1)
+has "engine-get 可用" "$AJSON" '"ok":true'
+has "默认扫描间隔为原生默认 2" "$AJSON" '"interval":2'
+has "默认 cpuset 为 AkiAppOpt" "$AJSON" '"cpuset":"AkiAppOpt"'
+sh webui.sh engine-set 5 MyOpt > /dev/null 2>&1
+ok "confige 写入 interval"  "$(grep -E '^interval=' confige.txt | cut -d= -f2 | tr -d '\r')" "5"
+ok "confige 写入 cpuset_name" "$(grep -E '^cpuset_name=' confige.txt | cut -d= -f2 | tr -d '\r')" "MyOpt"
+has "status 带出引擎参数" "$(sh webui.sh status 2>&1)" '"interval":5'
+has "拒绝非数字间隔"  "$(sh webui.sh engine-set abc X 2>&1)" '"ok":false'
+has "拒绝 0 间隔"      "$(sh webui.sh engine-set 0 X 2>&1)" '"ok":false'
+has "拒绝超范围间隔"  "$(sh webui.sh engine-set 99999 X 2>&1)" '"ok":false'
+has "拒绝含空格的 cpuset 名" "$(sh webui.sh engine-set 2 'bad name' 2>&1)" '"ok":false'
+ok "service.sh 会用 -s" "$(grep -c '\-s "\$INTERVAL"' "$ROOT/service.sh")" "1"
+ok "service.sh 会用 -b" "$(grep -c '\-b "\$CPUSET"' "$ROOT/service.sh")" "1"
+sh webui.sh engine-set 2 AkiAppOpt > /dev/null 2>&1
+
+printf '\n=== 13. AsoulOpt 配置（mode / rt / 每游戏覆盖）===\n'
+CONF="$MEIZU_ASOPT_DIR/asopt.conf"
+GAMES() { grep -cE '^[^#][^ ]+ [0-9]+ [0-9]+$' "$CONF" 2>/dev/null | tr -d ' '; }
+ASN() { sh webui.sh asopt-get 2>&1 | grep -o '"pkg":"[^"]*"' | wc -l | tr -d ' '; }
+
+has "未安装模块时 installed=0" "$(sh webui.sh asopt-get 2>&1)" '"installed":0'
+sh webui.sh asopt-set 2 1 > /dev/null 2>&1
+ok "写入 mode" "$(grep -E '^mode=' "$CONF" | cut -d= -f2 | tr -d '\r')" "2"
+ok "写入 rt"   "$(grep -E '^rt=' "$CONF" | cut -d= -f2 | tr -d '\r')" "1"
+has "保留上游说明头" "$(cat "$CONF")" '硬亲和'
+has "保留 per-game 说明" "$(cat "$CONF")" 'Per-game override'
+
+sh webui.sh asopt-set-game com.foo.game 1 0 > /dev/null 2>&1
+sh webui.sh asopt-set-game com.bar.game 0 0 > /dev/null 2>&1
+ok "新增两个游戏覆盖" "$(GAMES)" "2"
+sh webui.sh asopt-set-game com.foo.game 2 1 > /dev/null 2>&1
+ok "重复设置是覆盖而非新增" "$(GAMES)" "2"
+has "覆盖后取值正确" "$(grep '^com.foo.game' "$CONF")" 'com.foo.game 2 1'
+ok "asopt-get 返回 2 条" "$(ASN)" "2"
+sh webui.sh asopt-del-game com.foo.game > /dev/null 2>&1
+ok "删除后剩 1 条" "$(GAMES)" "1"
+ok "asopt-get 返回 1 条" "$(ASN)" "1"
+
+has "拒绝非法全局 mode" "$(sh webui.sh asopt-set 5 0 2>&1)" '"ok":false'
+has "拒绝非法全局 rt"   "$(sh webui.sh asopt-set 0 9 2>&1)" '"ok":false'
+has "拒绝非法游戏 mode" "$(sh webui.sh asopt-set-game com.x 9 0 2>&1)" '"ok":false'
+has "拒绝含空格的包名"  "$(sh webui.sh asopt-set-game 'a b' 0 0 2>&1)" '"ok":false'
+
+mkdir -p "$MEIZU_ASOPT_MOD"
+has "模块安装后 installed=1" "$(sh webui.sh asopt-get 2>&1)" '"installed":1'
+has "report 显示引擎参数" "$(sh webui.sh report 2>&1)" '扫描间隔'
+has "report 显示 AsoulOpt" "$(sh webui.sh report 2>&1)" 'AsoulOpt'
 
 rm -rf "$WORK"
 

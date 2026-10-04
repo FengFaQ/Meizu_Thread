@@ -23,8 +23,9 @@
 
 <nav class="tabs" id="tabs">
   <button class="tab active" data-tab="overview">总览</button>
+  <button class="tab" data-tab="engine">引擎</button>
   <button class="tab" data-tab="custom">自定义线程</button>
-  <button class="tab" data-tab="backup">备份 / 导入</button>
+  <button class="tab" data-tab="backup">备份</button>
 </nav>
 
 <main>
@@ -67,6 +68,89 @@
     <div class="card">
       <h2>运行状态</h2>
       <div class="kv" id="runtime"></div>
+    </div>
+
+  </section>
+
+  <!-- ============ 引擎 ============ -->
+  <section id="pane-engine" class="pane">
+
+    <div class="card">
+      <h2>AkiAppOpt 引擎参数</h2>
+      <p class="hint">
+        来自上游二进制的命令行选项（<code>-c / -s / -b / -h / -v</code>）。
+        修改后需重启引擎才生效。
+      </p>
+      <label class="field"><span>扫描间隔 -s（秒）</span>
+        <input id="en-interval" class="input" type="number" min="1" max="3600" step="1" inputmode="numeric">
+      </label>
+      <p class="hint">范围 1–3600，上游原生默认 <b>2</b>。越小越灵敏、越耗电。</p>
+      <label class="field"><span>cpuset 目录名 -b</span>
+        <input id="en-cpuset" class="input" type="text" spellcheck="false">
+      </label>
+      <p class="hint">上游原生默认 <b>AkiAppOpt</b>；对应 <code>/dev/cpuset/&lt;名字&gt;/</code>。</p>
+      <div class="btns">
+        <button class="btn primary" id="btn-engine-save">保存并重启引擎</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>AsoulOpt 运行模式</h2>
+      <div class="hint" id="asopt-status">加载中…</div>
+
+      <label class="field"><span>mode — 运行模式</span></label>
+      <div class="seg" id="seg-asopt-mode">
+        <button data-val="0">0 硬亲和</button>
+        <button data-val="1">1 软迁移</button>
+        <button data-val="2">2 硬迁移</button>
+      </div>
+      <p class="hint">
+        0 硬亲和，理论上表现更好 · 1 软迁移，帧率可能更稳定 · 2 硬迁移，帧率可能更稳定
+      </p>
+
+      <label class="field"><span>rt — 实时模式</span></label>
+      <div class="seg" id="seg-asopt-rt">
+        <button data-val="0">0 调度器默认</button>
+        <button data-val="1">1 实时</button>
+      </div>
+      <p class="hint">0 调度器默认行为 · 1 可能更流畅，但<b>可能导致卡死</b></p>
+
+      <div class="btns">
+        <button class="btn primary" id="btn-asopt-save">保存全局设置</button>
+      </div>
+      <p class="hint">保存后即时应用，切换游戏后生效。</p>
+    </div>
+
+    <div class="card">
+      <h2>每游戏单独配置</h2>
+      <p class="hint">为某个游戏覆盖上面的全局值；一行一个，未列出的游戏使用全局值。</p>
+      <div id="asopt-games" class="rules"></div>
+
+      <label class="field"><span>包名</span>
+        <input id="as-pkg" class="input" type="text" spellcheck="false" list="pkg-list"
+          placeholder="com.miHoYo.Yuanshen">
+      </label>
+      <datalist id="pkg-list"></datalist>
+      <label class="field"><span>mode</span>
+        <select id="as-mode" class="input">
+          <option value="0">0 — 硬亲和</option>
+          <option value="1">1 — 软迁移</option>
+          <option value="2">2 — 硬迁移</option>
+        </select>
+      </label>
+      <label class="field"><span>rt</span>
+        <select id="as-rt" class="input">
+          <option value="0">0 — 调度器默认</option>
+          <option value="1">1 — 实时</option>
+        </select>
+      </label>
+      <div class="btns">
+        <button class="btn primary" id="btn-asopt-add">添加 / 覆盖</button>
+      </div>
+      <p class="hint">
+        提示：文件名与写法与上游 <code>/data/adb/naki/asopt.conf</code> <b>完全一致</b>，
+        可直接与官方模块共用。
+      </p>
     </div>
 
   </section>

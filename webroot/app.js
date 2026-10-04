@@ -180,7 +180,9 @@
     shown: PAGE,
     keyword: '',
     current: null,
-    rules: []
+    rules: [],
+    engine: null,
+    asopt: { mode: 0, rt: 0, games: [] }
   };
 
   /* ---------------- 渲染：总览 ---------------- */
@@ -286,6 +288,13 @@
           adapted: (f[3] || '0') === '1'
         };
       }).filter(function (a) { return a.pkg; });
+
+      var dl = $('pkg-list');
+      if (dl) {
+        dl.innerHTML = STATE.apps.map(function (a) {
+          return '<option value="' + esc(a.pkg) + '"></option>';
+        }).join('');
+      }
       renderApps();
     });
   }
@@ -449,6 +458,106 @@
     })['finally'](function () { busy(false); });
   }
 
+  /* ---------------- 引擎 / AsoulOpt ---------------- */
+  function loadEngine() {
+    return jsonCmd('engine-get', 30000).then(function (j) {
+      if (!j || !j.ok) return;
+      STATE.engine = j;
+      $('en-interval').value = j.interval;
+      $('en-cpuset').value = j.cpuset;
+      $('en-interval').placeholder = String(j.def_interval);
+      $('en-cpuset').placeholder = j.def_cpuset;
+    });
+  }
+
+  function saveEngine() {
+    var iv = String($('en-interval').value || '').trim();
+    var cs = String($('en-cpuset').value || '').trim();
+    if (!/^[0-9]+$/.test(iv)) { notify('扫描间隔必须是正整数（秒）'); return; }
+    if (!cs) { notify('cpuset 名不能为空'); return; }
+    busy(true, '保存并重启引擎…');
+    jsonCmd('engine-set ' + shq(iv) + ' ' + shq(cs), 120000).then(function (j) {
+      notify((j && j.msg) || '完成');
+      return loadEngine().then(function () { return loadStatus(true); });
+    })['finally'](function () { busy(false); });
+  }
+
+  function setSeg(id, val) {
+    var bs = $(id).querySelectorAll('button');
+    for (var i = 0; i < bs.length; i++) {
+      bs[i].classList.toggle('on', bs[i].getAttribute('data-val') === String(val));
+    }
+  }
+
+  function getSeg(id) {
+    var b = $(id).querySelector('button.on');
+    return b ? b.getAttribute('data-val') : '0';
+  }
+
+  function loadAsopt() {
+    return jsonCmd('asopt-get', 30000).then(function (j) {
+      if (!j || !j.ok) return;
+      STATE.asopt = j;
+      setSeg('seg-asopt-mode', j.mode);
+      setSeg('seg-asopt-rt', j.rt);
+      var st = $('asopt-status');
+      if (j.installed) {
+        st.innerHTML = '✅ 已检测到上游 <b>AsoulOpt</b> 模块，保存后即时生效。';
+      } else {
+        st.innerHTML = 'ℹ️ 未检测到上游 <b>AsoulOpt</b> 模块。'
+          + '本模块已用 AsoulOpt 规则段接管游戏线程，这里的设置会在你安装官方 AsoulOpt 模块后直接生效。';
+      }
+      renderAsoptGames(j.games || []);
+    });
+  }
+
+  function renderAsoptGames(games) {
+    var host = $('asopt-games');
+    if (!games.length) {
+      host.innerHTML = '<p class="hint">暂无单独配置的游戏（全部使用全局值）。</p>';
+      return;
+    }
+    host.innerHTML = games.map(function (g) {
+      return '<div class="rule">' +
+        '<span class="thr">' + esc(g.pkg) + '</span>' +
+        '<span class="tail">' +
+        '<span class="core">mode ' + esc(g.mode) + '</span>' +
+        '<span class="core">rt ' + esc(g.rt) + '</span>' +
+        '<button class="btn small danger" data-delgame="' + esc(g.pkg) + '">删</button>' +
+        '</span></div>';
+    }).join('');
+  }
+
+  function saveAsopt() {
+    var m = getSeg('seg-asopt-mode');
+    var r = getSeg('seg-asopt-rt');
+    busy(true, '保存 AsoulOpt 设置…');
+    jsonCmd('asopt-set ' + shq(m) + ' ' + shq(r), 60000).then(function (j) {
+      notify((j && j.msg) || '完成');
+      return loadAsopt();
+    })['finally'](function () { busy(false); });
+  }
+
+  function addAsoptGame() {
+    var p = String($('as-pkg').value || '').trim();
+    if (!p) { notify('请输入包名'); return; }
+    busy(true, '保存中…');
+    jsonCmd('asopt-set-game ' + shq(p) + ' ' + shq($('as-mode').value) + ' ' + shq($('as-rt').value), 60000)
+      .then(function (j) {
+        notify((j && j.msg) || '完成');
+        if (j && j.ok) $('as-pkg').value = '';
+        return loadAsopt();
+      })['finally'](function () { busy(false); });
+  }
+
+  function delAsoptGame(pkg) {
+    busy(true, '删除中…');
+    jsonCmd('asopt-del-game ' + shq(pkg), 60000).then(function (j) {
+      notify((j && j.msg) || '完成');
+      return loadAsopt();
+    })['finally'](function () { busy(false); });
+  }
+
   /* ---------------- 事件 ---------------- */
   function switchTab(name) {
     var tabs = document.querySelectorAll('.tab');
@@ -458,6 +567,11 @@
     var panes = document.querySelectorAll('.pane');
     for (var j = 0; j < panes.length; j++) {
       panes[j].classList.toggle('active', panes[j].id === 'pane-' + name);
+    }
+    if (name === 'engine') {
+      loadEngine();
+      loadAsopt();
+      if (!STATE.apps.length) loadApps();
     }
     if (name === 'custom' && !STATE.apps.length) loadApps();
   }
@@ -532,6 +646,22 @@
     $('btn-export').addEventListener('click', doExport);
     $('btn-import').addEventListener('click', doImport);
     $('btn-reset-all').addEventListener('click', resetAll);
+
+    // ---- 引擎 / AsoulOpt ----
+    $('btn-engine-save').addEventListener('click', saveEngine);
+    $('btn-asopt-save').addEventListener('click', saveAsopt);
+    $('btn-asopt-add').addEventListener('click', addAsoptGame);
+
+    $('seg-asopt-mode').addEventListener('click', function (e) {
+      if (e.target.tagName === 'BUTTON') setSeg('seg-asopt-mode', e.target.getAttribute('data-val'));
+    });
+    $('seg-asopt-rt').addEventListener('click', function (e) {
+      if (e.target.tagName === 'BUTTON') setSeg('seg-asopt-rt', e.target.getAttribute('data-val'));
+    });
+    $('asopt-games').addEventListener('click', function (e) {
+      var d = e.target.getAttribute && e.target.getAttribute('data-delgame');
+      if (d && confirm('移除「' + d + '」的单独配置？')) delAsoptGame(d);
+    });
   }
 
   /* ---------------- 启动 ---------------- */
